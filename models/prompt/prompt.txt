@@ -1,0 +1,7 @@
+Rewrite the term "{word}" into one new term.
+Strict rules:
+- Must strictly belong to the "{category}" category and sound completely natural as a real movie attribute.
+- Use exactly 2 to 4 English words, matching the original term's style (length, rhythm, and structure).
+- Zero overlap: Do not use any synonyms, rephrasing, similar forms, or parts of the original term.
+- Output exactly and only: <answer>new term</answer>
+{similarity_note}{context_str}<answer>
