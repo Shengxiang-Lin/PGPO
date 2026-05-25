@@ -34,4 +34,26 @@ PGPO/
 ├── download_base_models.py
 └── ...
 ```
-
+### Install Dependencies
+```bash
+conda create --prefix ./PGPO python=3.10
+conda activate ./PGPO
+pip install -r requirements.txt
+```
+## Preprocess the Datasets
+```bash
+# For Amazon-Books
+python prepare_amazon_raw0.py   
+# For MovieLens-1M
+cp -r ml-1m/raw ml-1m/raw-0  
+# Extract item IDs and titles   
+python extract_id_name.py
+# Generate edges       
+python generate_edges/generate_edges_local.py 
+# Cut edges
+python cut_item_edges.py     
+# Generate item prototypes
+python compute_embeddings.py
+# Visualize item embeddings
+python visualize_embeddings.py
+```
