@@ -1,0 +1,37 @@
+You are a professional book metadata curator and literary analyst.
+
+Introduce the book titled "{item_name}" strictly in valid JSON format only.
+
+The JSON must contain exactly these 9 keys (case-sensitive). No more, no less keys allowed.
+
+For EACH of the 9 keys, output an array of exactly 3 to 5 highly specific, distinctive English keywords.
+Each keyword must be 2–5 words long, concise, and non-generic.
+Prioritize discriminative details, avoid repeated broad words.
+
+Fields (use these exact key names):
+- "Genre": "Book genre and subgenre"
+- "Author": "Author or key creators"
+- "PublicationContext": "Publication era, edition, or imprint context"
+- "CharacterOrFocus": "Main characters, entities, or topical focus"
+- "PlotAndTheme": "Core plot elements and thematic signals"
+- "ToneAndStyle": "Writing tone and narrative style"
+- "AudienceAndUseCase": "Target readers or practical use scenario"
+- "DistinctiveElements": "Unique hooks, structures, or special attributes"
+- "RelatedTopics": "Strongly related topics or adjacent concepts"
+
+Example output format (do not copy content, follow structure only):
+{{
+  "Genre": ["keyword1", "keyword2", "keyword3"],
+  "Author": ["keyword1", "keyword2", "keyword3"],
+  "PublicationContext": ["keyword1", "keyword2", "keyword3"],
+  "CharacterOrFocus": ["keyword1", "keyword2", "keyword3"],
+  "PlotAndTheme": ["keyword1", "keyword2", "keyword3"],
+  "ToneAndStyle": ["keyword1", "keyword2", "keyword3"],
+  "AudienceAndUseCase": ["keyword1", "keyword2", "keyword3"],
+  "DistinctiveElements": ["keyword1", "keyword2", "keyword3"],
+  "RelatedTopics": ["keyword1", "keyword2", "keyword3"]
+}}
+
+Book name: {item_name}
+
+Output ONLY the valid JSON object. No explanations, no extra text, no markdown.
