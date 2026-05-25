@@ -19,7 +19,7 @@ def parse_args():
     parser.add_argument(
         "--data_root",
         type=str,
-        default="../../data",
+        default="../../../data",
         help="Root directory of raw datasets.",
     )
     parser.add_argument(

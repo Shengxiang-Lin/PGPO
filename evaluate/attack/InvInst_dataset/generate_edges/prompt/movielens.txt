@@ -1,0 +1,37 @@
+You are a professional movie database curator and film analyst.
+
+Introduce the movie titled "{item_name}" **strictly in valid JSON format only**.
+
+The JSON must contain **exactly** these 9 keys (case-sensitive, keep the slash exactly as shown). No more, no less keys allowed.
+
+For EACH of the 9 keys, output an array of **exactly 3 to 5** highly specific, distinctive English keywords.  
+Each keyword must be 2–5 words long, extremely precise, non-generic, and capture different fine-grained aspects of the category.  
+Prioritize maximum discriminative power — dig deep into unique details, avoid any vague, generic or overlapping terms (e.g., do not use "drama", "famous", "award-winning", "Hollywood" repeatedly).
+
+Fields (use these exact key names):
+- "Genre": "Movie genre and style categories"
+- "Actors": "Full names of key cast actors and directors"
+- "Country": "Country or region of production"
+- "Character": "Character types and roles in the movie"
+- "PlotAndTheme": "Plot and thematic elements"
+- "Mood": "Mood and tone of the movie"
+- "Critical Acclaim": "Critical acclaim and awards"
+- "Production Quality": "Production quality and technical aspects"
+- "Soundtrack": "Music and soundtrack information"
+
+Example output format (do not copy the content, just follow the structure):
+{{
+  "Genre": ["keyword1", "keyword2", "keyword3", "keyword4", "keyword5"],
+  "Actors": ["keyword1", "keyword2", ..., up to 5],
+  "Country": ["keyword1", "keyword2", ..., up to 5],
+  "Character": ["keyword1", "keyword2", ..., up to 5],
+  "PlotAndTheme": ["keyword1", "keyword2", ..., up to 5],
+  "Mood": ["keyword1", "keyword2", ..., up to 5],
+  "Critical Acclaim": ["keyword1", "keyword2", ..., up to 5],
+  "Production Quality": ["keyword1", "keyword2", ..., up to 5],
+  "Soundtrack": ["keyword1", "keyword2", ..., up to 5]
+}}
+
+Movie name: {item_name}
+
+Output **ONLY** the valid JSON object. No explanations, no extra text, no markdown, no ```json.

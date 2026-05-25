@@ -11,8 +11,8 @@ import pandas as pd
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type=str, default="amazon-book", choices=["ml-1m", "amazon-book"])
-    parser.add_argument("--data_root", type=str, default="../../data")
-    parser.add_argument("--embedding_root", type=str, default="../embedding/data")
+    parser.add_argument("--data_root", type=str, default="../../../data")
+    parser.add_argument("--embedding_root", type=str, default="../../embedding/data")
     parser.add_argument("--embedding_variant", type=str, default="v2", choices=["v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8"])
     parser.add_argument("--split_reference_variant", type=str, default="v1", choices=["v0", "v1", "v2", "v3", "v4", "v5", "v6", "v7", "v8"])
     parser.add_argument("--output_root", type=str, default="./data")
