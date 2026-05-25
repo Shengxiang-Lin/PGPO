@@ -242,9 +242,17 @@ python train_grpo.py \
   --use_cache 1
 ```
 
-## Notes
+downstream evaluation
+embedding
+cd evaluate/embedding
+python generate_item_embeddings_v2.py
+python generate_item_embeddings_v3.py 
 
-- Dataset names used by the scripts are `ml-1m`, `amazon-book`, and `movielens` depending on the corresponding entry script
-- For preprocessing scripts, `--dataset` is usually sufficient unless you want to override file locations
-- For `extract_id_name.py`, both dataset-based defaults and explicit positional arguments are supported
-- Ensure required base models are available locally before launching edge generation or GRPO training
+Obfuscated Variants Quality
+cd evaluate/quality
+
+Recommendation Performance
+cd recsys
+
+Embedding Inversion Defense
+cd attack
