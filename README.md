@@ -1,17 +1,28 @@
-# Prototype-Guided Progressive Obfuscation for Privacy-Preserving LLM-Enhanced Recommendation
+<h1 align="center">Prototype-Guided Progressive Obfuscation for Privacy-Preserving LLM-Enhanced Recommendation</h1>
 
-PGPO is a prototype-guided privacy-preserving framework for LLM-enhanced recommendation. It builds item-level semantic structures, prunes noisy edges, constructs prototype representations, and then optimizes obfuscation quality with GRPO-based reward learning.
+PGPO is a prototype-guided framework for privacy-preserving LLM-enhanced recommendation. It supports end-to-end experimentation from raw data preprocessing and semantic structure construction to GRPO-based obfuscation learning, downstream recommendation evaluation, and embedding inversion defense analysis.
 
 ## Overview
 
-This repository provides:
+This repository covers:
 
 - Data preprocessing pipelines for `MovieLens-1M` and `Amazon-Book`
-- Semantic edge construction from item titles and metadata
-- Prototype extraction and similarity computation for fine-grained details
+- LLM-based semantic edge construction and category-aware edge pruning
+- Prototype extraction and similarity computation for fine-grained item details
 - GRPO training for privacy-preserving variant generation
+- Downstream evaluation for embedding quality, recommendation performance, and inversion robustness
+- Reproducible experimental entry points for both semantic baselines and obfuscated variants
+
+### Workflow at a Glance
+
+1. Prepare raw datasets and construct cleaned semantic item structures.
+2. Build prototype-level embeddings and similarity statistics for GRPO training.
+3. Train PGPO to generate privacy-preserving obfuscated variants.
+4. Evaluate the resulting variants from embedding, quality, recommendation, and defense perspectives.
 
 ## Environment Setup
+
+This section prepares the runtime environment, base models, and raw datasets required by the preprocessing and evaluation pipelines.
 
 ### 1. Clone the Repository
 
@@ -70,7 +81,7 @@ PGPO/
 
 ## Preprocessing Pipeline
 
-Most preprocessing scripts support two usage patterns:
+This section converts raw datasets into the structured semantic resources required by PGPO. Most preprocessing scripts support two usage patterns:
 
 - Default-path mode: only specify `--dataset`, and the script uses built-in paths
 - Explicit-path mode: directly pass input and output paths as positional arguments
@@ -193,7 +204,9 @@ This stage produces:
 - embedding representations for those details
 - similarity statistics used by GRPO training
 
-## Recommended End-to-End Commands
+## Quick Start Pipelines
+
+The following commands summarize the recommended preprocessing flow for each dataset.
 
 ### MovieLens-1M
 
@@ -217,19 +230,21 @@ python compute_embeddings.py --dataset amazon-book
 
 ## GRPO Training
 
-After preprocessing is complete, you can launch GRPO training with dataset-aware default paths:
+Once the preprocessing stage is complete, you can train PGPO to generate privacy-preserving variants with dataset-aware default paths.
+
+Launch training for MovieLens:
 
 ```bash
 python train_grpo.py --dataset movielens
 ```
 
-For Amazon-Book:
+Launch training for Amazon-Book:
 
 ```bash
 python train_grpo.py --dataset amazon-book
 ```
 
-A more explicit example:
+A more explicit configuration example:
 
 ```bash
 python train_grpo.py \
@@ -244,7 +259,7 @@ python train_grpo.py \
 
 ## Downstream Evaluation
 
-All downstream evaluation code is located under `evaluate/`. Before running this section, make sure that:
+All downstream evaluation code is located under `evaluate/`. This part measures the utility, quality, and privacy properties of the generated variants. Before running this section, make sure that:
 
 - the preprocessing pipeline has finished successfully
 - `cleaned_item_edges.json` and `id_item.json` are available under `data/<dataset>/handled/`
