@@ -1,7 +1,5 @@
 <h1 align="center">Prototype-Guided Progressive Obfuscation for Privacy-Preserving LLM-Enhanced Recommendation</h1>
 
-PGPO is a prototype-guided framework for privacy-preserving LLM-enhanced recommendation. It supports end-to-end experimentation from raw data preprocessing and semantic structure construction to GRPO-based obfuscation learning, downstream recommendation evaluation, and embedding inversion defense analysis.
-
 ## Overview
 
 This repository covers:
