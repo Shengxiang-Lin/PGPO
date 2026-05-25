@@ -352,7 +352,7 @@ Notes:
 Recommendation evaluation is implemented under `evaluate/recsys/` with three families of backends:
 
 - `multi/`: multimodal baselines such as MMRec FREEDOM and LightGT
-- `recbole/`: RecBole-based recommenders such as SASRec, LightGCN, NeuMF, DeepFM, and Two-Tower variants
+- `recbole/`: RecBole-based recommenders such as SASRec and LightGCN
 - `llara/`: LLaRA-style semantic recommendation pipeline
 
 #### Multi-Modal Baselines
