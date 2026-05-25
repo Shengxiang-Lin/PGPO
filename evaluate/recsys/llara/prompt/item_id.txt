@@ -1,0 +1,1 @@
+Given the user's interaction history [HistoryHere], which item from candidates [CansHere] is the most likely next item? Only output one candidate item id.
