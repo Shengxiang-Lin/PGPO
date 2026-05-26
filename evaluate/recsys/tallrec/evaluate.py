@@ -35,7 +35,7 @@ def main(
     base_model: str = "../../../base_models/Qwen2.5-7B-Instruct",
     dataset_name: str = "ml-1m",
     data_root: str = "./data",
-    embedding_root: str = "../../../embedding/data",
+    embedding_root: str = "../../embedding/data",
     embedding_version: str = "v5",
     lora_weights: str = "",
     test_data_path: str = "",

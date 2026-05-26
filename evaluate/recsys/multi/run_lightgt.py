@@ -51,7 +51,7 @@ def parse_args():
     parser.add_argument("--has_t", type=str, default="True")
     parser.add_argument("--has_e", type=str, default="False")
     parser.add_argument("--edge_variant", type=str, default="v3")
-    parser.add_argument("--embedding_root", type=str, default="../../embedding/data")
+    parser.add_argument("--embedding_root", type=str, default="../../../embedding/data")
     return parser.parse_args()
 
 

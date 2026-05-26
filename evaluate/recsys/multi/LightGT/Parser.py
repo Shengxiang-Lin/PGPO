@@ -35,6 +35,6 @@ def parse_args():
     parser.add_argument('--has_t', default='True', help='Has Textual Features.')
     parser.add_argument('--has_e', default='False', help='Has 4th Edge Features.')
     parser.add_argument('--edge_variant', type=str, default='v3', help='Embedding variant name (e.g., v2/v3).')
-    parser.add_argument('--embedding_root', type=str, default='../../embedding/data', help='Root of precomputed embeddings.')
+    parser.add_argument('--embedding_root', type=str, default='../../../embedding/data', help='Root of precomputed embeddings.')
 
     return parser.parse_args()

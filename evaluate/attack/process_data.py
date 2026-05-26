@@ -10,10 +10,10 @@ from transformers import AutoModel, AutoTokenizer
 
 BASE_DIR = Path(__file__).resolve().parent
 DEFAULT_EMBEDDING_ROOTS = {
-    "movie": Path("/home/lsx/code/AM-LLM/evaluate/embedding/data/ml-1m"),
-    "book": Path("/home/lsx/code/AM-LLM/evaluate/embedding/data/amazon-book"),
+    "movie": Path("../embedding/data/ml-1m"),
+    "book": Path("../embedding/data/amazon-book"),
 }
-DEFAULT_TRAIN_EMBEDDING_MODEL = "/home/lsx/code/AM-LLM/base_models/bert-base-uncased"
+DEFAULT_TRAIN_EMBEDDING_MODEL = "../../base_models/bert-base-uncased"
 
 
 def load_json(path: Path) -> Any:

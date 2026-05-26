@@ -140,10 +140,10 @@ class EdgeEmbeddingTrainer(Trainer):
 
 
 def train(
-    base_model: str = "../../base_models/Qwen2.5-7B-Instruct",
+    base_model: str = "../../../base_models/Qwen2.5-7B-Instruct",
     dataset_name: str = "ml-1m",
     data_root: str = "./data",
-    embedding_root: str = "../embedding/data",
+    embedding_root: str = "../../embedding/data",
     embedding_version: str = "v4",
     train_data_path: str = "",
     val_data_path: str = "",

@@ -29,7 +29,7 @@ def parse_args():
     parser.add_argument("--max_trials", type=int, default=0, help="0 means run all.")
     parser.add_argument("--log_root", type=str, default="./logs/mmrec_freedom")
     parser.add_argument("--edge_variant", type=str, default="v2")
-    parser.add_argument("--embedding_root", type=str, default="../embedding/data")
+    parser.add_argument("--embedding_root", type=str, default="../../embedding/data")
     parser.add_argument("--cpu", action="store_true", help="Force CPU execution.")
     parser.add_argument("--gpu_id", type=int, default=0)
     parser.add_argument("--eval_batch_size", type=int, default=4096)

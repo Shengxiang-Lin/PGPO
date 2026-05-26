@@ -39,7 +39,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--include_embeddings_in_jsonl", action="store_true")
 
-    parser.add_argument("--model_name_or_path", type=str, default="/home/lsx/code/AM-LLM/base_models/t5-base")
+    parser.add_argument("--model_name_or_path", type=str, default="../../base_models/t5-base")
     parser.add_argument("--num_repeat_tokens", type=int, default=8)
     parser.add_argument("--max_target_length", type=int, default=48)
     parser.add_argument("--batch_size", type=int, default=8)

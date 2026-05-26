@@ -566,7 +566,7 @@ def main(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type=str, default="amazon-book")
-    parser.add_argument("--data_root", type=str, default="../../data/")
+    parser.add_argument("--data_root", type=str, default="../../../data")
     parser.add_argument("--output_root", type=str, default="./data")
     parser.add_argument("--seq_len", type=int, default=10)
     parser.add_argument("--max_samples", type=int, default=10000)

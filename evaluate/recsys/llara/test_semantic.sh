@@ -1,7 +1,7 @@
 EMB_VARIANT=${1:-v1}
 TASK_TYPE=${2:-generate}
 DATASET_NAME=${3:-ml-1m}
-LLM_PATH=${4:-../../base_models/CodeLlama-7b-Instruct-hf}
+LLM_PATH=${4:-../../../base_models/CodeLlama-7b-Instruct-hf}
 OMP_NUM_THREADS_CLEAN=$(printf '%s' "${OMP_NUM_THREADS:-}" | tr -d '\r')
 case "$OMP_NUM_THREADS_CLEAN" in
   ''|*[!0-9]*) OMP_NUM_THREADS_CLEAN=1 ;;

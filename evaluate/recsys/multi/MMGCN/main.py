@@ -42,7 +42,7 @@ if __name__ == '__main__':
     parser.add_argument('--has_t', default='True', help='Has Textual Features.')
     parser.add_argument('--has_e', default='False', help='Has 4th Edge Features.')
     parser.add_argument('--edge_variant', default='v3', help='Embedding variant name.')
-    parser.add_argument('--embedding_root', default='../../embedding/data', help='Root of precomputed embeddings.')
+    parser.add_argument('--embedding_root', default='../../../embedding/data', help='Root of precomputed embeddings.')
     parser.add_argument('--random_edge_features', default='False', help='Use random edge features as a lower-bound baseline.')
 
     args = parser.parse_args()
