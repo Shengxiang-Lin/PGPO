@@ -28,6 +28,7 @@ class RewardCalculator:
         lambda1: float = 1.0,
         lambda2: float = 1.0,
         lambda3: float = 1.0,
+        enable_dynamic_reward_weights: bool = False,
         use_r_dissimilar: bool = True,
         use_r_structure: bool = True,
         use_r_category_valid: bool = True,
@@ -40,6 +41,7 @@ class RewardCalculator:
         fine_details_data=None,
         history_window: int = 100,
     ):
+        self.enable_dynamic_reward_weights = enable_dynamic_reward_weights
         self.lambda1 = lambda1
         self.lambda2 = lambda2
         self.lambda3 = lambda3
@@ -103,6 +105,7 @@ class RewardCalculator:
             f"structure={self.use_r_structure}, "
             f"category_valid={self.use_r_category_valid}"
         )
+        print(f"Dynamic reward weights: {self.enable_dynamic_reward_weights}")
         print("Reward calculator initialized successfully!")
     
     def get_embedding(self, text: str) -> torch.Tensor:
@@ -445,14 +448,18 @@ class RewardCalculator:
             effective_lambda3 * norm_r_category_valid
         )
         
-        if self.use_r_dissimilar:
-            self.dissimilar_history.append(r_dissimilar)
-        if self.use_r_structure and has_context:
-            self.structure_history.append(r_structure)
-        if self.use_r_category_valid:
-            self.category_valid_history.append(r_category_valid)
-        
-        self.update_dynamic_lambda()
+        if self.enable_dynamic_reward_weights:
+            if self.use_r_dissimilar:
+                self.dissimilar_history.append(r_dissimilar)
+            if self.use_r_structure and has_context:
+                self.structure_history.append(r_structure)
+            if self.use_r_category_valid:
+                self.category_valid_history.append(r_category_valid)
+            self.update_dynamic_lambda()
+        else:
+            self.dynamic_lambda1 = self.base_lambda1
+            self.dynamic_lambda2 = self.base_lambda2
+            self.dynamic_lambda3 = self.base_lambda3
         
         self.current_step += 1
         
@@ -498,6 +505,7 @@ def create_reward_function(
     lambda1: float = 1.0,
     lambda2: float = 1.0,
     lambda3: float = 1.0,
+    enable_dynamic_reward_weights: bool = False,
     use_r_dissimilar: bool = True,
     use_r_structure: bool = True,
     use_r_category_valid: bool = True,
@@ -521,6 +529,7 @@ def create_reward_function(
         lambda1=lambda1,
         lambda2=lambda2,
         lambda3=lambda3,
+        enable_dynamic_reward_weights=enable_dynamic_reward_weights,
         use_r_dissimilar=use_r_dissimilar,
         use_r_structure=use_r_structure,
         use_r_category_valid=use_r_category_valid,

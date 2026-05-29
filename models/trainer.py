@@ -85,6 +85,7 @@ def create_grpo_trainer(
     lambda1: float,
     lambda2: float,
     lambda3: float,
+    enable_dynamic_reward_weights: bool = False,
     use_r_dissimilar: bool = True,
     use_r_structure: bool = True,
     use_r_category_valid: bool = True,
@@ -202,6 +203,7 @@ def create_grpo_trainer(
         lambda1=lambda1,
         lambda2=lambda2,
         lambda3=lambda3,
+        enable_dynamic_reward_weights=enable_dynamic_reward_weights,
         use_r_dissimilar=use_r_dissimilar,
         use_r_structure=use_r_structure,
         use_r_category_valid=use_r_category_valid,
@@ -252,6 +254,7 @@ def train_grpo(
     lambda1: float = 1.0,
     lambda2: float = 1.0,
     lambda3: float = 1.0,
+    enable_dynamic_reward_weights: bool = False,
     use_r_dissimilar: bool = True,
     use_r_structure: bool = True,
     use_r_category_valid: bool = True,
@@ -289,6 +292,7 @@ def train_grpo(
     print(f"Sampling temperature: {temperature}")
     print(f"Min_p: {min_p}")
     print(f"Use rewards: dissimilar={use_r_dissimilar}, structure={use_r_structure}, category_valid={use_r_category_valid}")
+    print(f"Dynamic reward weights: {enable_dynamic_reward_weights}")
     print(f"TensorBoard: {enable_tensorboard}")
     print(f"Reward step metrics file: {os.path.join(output_dir, 'reward_step_metrics.txt')}")
     print(f"Max steps: {max_steps}")
@@ -322,6 +326,7 @@ def train_grpo(
         lambda1=lambda1,
         lambda2=lambda2,
         lambda3=lambda3,
+        enable_dynamic_reward_weights=enable_dynamic_reward_weights,
         use_r_dissimilar=use_r_dissimilar,
         use_r_structure=use_r_structure,
         use_r_category_valid=use_r_category_valid,
@@ -357,6 +362,7 @@ def train_grpo(
         "lambda1": lambda1,
         "lambda2": lambda2,
         "lambda3": lambda3,
+        "enable_dynamic_reward_weights": enable_dynamic_reward_weights,
         "use_r_dissimilar": use_r_dissimilar,
         "use_r_structure": use_r_structure,
         "use_r_category_valid": use_r_category_valid,

@@ -81,6 +81,13 @@ if __name__ == "__main__":
     parser.add_argument("--lambda1", type=float, default=1.0, help="R_dissimilar weight")
     parser.add_argument("--lambda2", type=float, default=1.0, help="R_structure weight")
     parser.add_argument("--lambda3", type=float, default=1.0, help="R_category_valid weight")
+    parser.add_argument(
+        "--dynamic_reward_weights",
+        type=int,
+        choices=[0, 1],
+        default=0,
+        help="Whether to enable dynamic reward weight scheduling for lambda1/2/3 (1=yes, 0=no)",
+    )
     parser.add_argument("--use_r_dissimilar", type=int, choices=[0, 1], default=1, help="Whether to use R_dissimilar (1=yes, 0=no)")
     parser.add_argument("--use_r_structure", type=int, choices=[0, 1], default=1, help="Whether to use R_structure (1=yes, 0=no)")
     parser.add_argument("--use_r_category_valid", type=int, choices=[0, 1], default=1, help="Whether to use R_category_valid (1=yes, 0=no)")
@@ -217,6 +224,7 @@ if __name__ == "__main__":
             lambda1=args.lambda1,
             lambda2=args.lambda2,
             lambda3=args.lambda3,
+            enable_dynamic_reward_weights=bool(args.dynamic_reward_weights),
             use_r_dissimilar=bool(args.use_r_dissimilar),
             use_r_structure=effective_use_r_structure,
             use_r_category_valid=bool(args.use_r_category_valid),
