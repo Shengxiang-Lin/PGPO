@@ -273,6 +273,16 @@ class RewardCalculator:
             return 0.0
         
         try:
+            def _to_prob(values: List[float]) -> List[float]:
+                epsilon = 1e-10
+                total = float(sum(values))
+                if total <= epsilon:
+                    n = len(values)
+                    if n <= 0:
+                        return []
+                    return [1.0 / n] * n
+                return [float(x) / total for x in values]
+
             context_originals = []
             context_generateds = []
             
@@ -309,21 +319,19 @@ class RewardCalculator:
             for word in context_originals:
                 emb = self.get_embedding(word)
                 sim = self.compute_similarity(current_orig_emb, emb)
-                orig_similarities.append(sim)
+                sim = max(-1.0, min(1.0, float(sim)))
+                orig_similarities.append((sim + 1.0) / 2.0)
             
             current_gen_emb = self.get_embedding(current_generated)
             gen_similarities = []
             for word in context_generateds:
                 emb = self.get_embedding(word)
                 sim = self.compute_similarity(current_gen_emb, emb)
-                gen_similarities.append(sim)
+                sim = max(-1.0, min(1.0, float(sim)))
+                gen_similarities.append((sim + 1.0) / 2.0)
             
-            epsilon = 1e-10
-            orig_sum = sum(orig_similarities) + epsilon
-            gen_sum = sum(gen_similarities) + epsilon
-            
-            orig_norm = [x / orig_sum for x in orig_similarities]
-            gen_norm = [x / gen_sum for x in gen_similarities]
+            orig_norm = _to_prob(orig_similarities)
+            gen_norm = _to_prob(gen_similarities)
             
             w_dist = wasserstein_distance(orig_norm, gen_norm)
             
