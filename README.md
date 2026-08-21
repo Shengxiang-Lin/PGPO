@@ -195,6 +195,12 @@ Evaluation instructions have been moved to **[evaluate/README.md](evaluate/READM
 
 This project is licensed under the [MIT License](LICENSE).
 
+## 📧 Contact
+
+For questions and collaborations, please contact:
+
+- Shengxiang Lin: [reallinshengxiang@gmail.com](mailto:reallinshengxiang@gmail.com)
+
 ## 🙏 Acknowledgments
 
 This repository builds on open-source resources and models including [Qwen](https://github.com/QwenLM/Qwen), [Transformers](https://github.com/huggingface/transformers), [TRL](https://github.com/huggingface/trl), [PEFT](https://github.com/huggingface/peft), [Unsloth](https://github.com/unslothai/unsloth), and [Vec2Text](https://github.com/vec2text/vec2text).
