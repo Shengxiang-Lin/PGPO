@@ -14,7 +14,7 @@ This repository covers:
 ## 🏗️ Architecture
 
 <p align="center">
-  <img src="figs/pgpo-framework.png" width="100%" alt="PGPO Framework">
+  <img src="figs/pgpo-framework.jpg" width="100%" alt="PGPO Framework">
 </p>
 
 <p align="left"><b>Figure 1.</b> Overview of PGPO. High-influence prototype words are first identified, and a vocabulary-level static semantic graph is constructed. The LLM then explores prototype obfuscation anchors under GRPO-based reward optimization and propagates them through the graph to the remaining vocabulary.</p>
