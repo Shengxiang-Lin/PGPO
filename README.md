@@ -11,6 +11,14 @@ This repository covers:
 - Downstream evaluation for embedding quality, recommendation performance, and inversion robustness
 - Reproducible experimental entry points for both semantic baselines and obfuscated variants
 
+## 🏗️ Architecture
+
+<p align="center">
+  <img src="figs/pgpo-framework.png" width="100%" alt="PGPO Framework">
+</p>
+
+<p align="left"><b>Figure 1.</b> Overview of PGPO. High-influence prototype words are first identified, and a vocabulary-level static semantic graph is constructed. The LLM then explores prototype obfuscation anchors under GRPO-based reward optimization and propagates them through the graph to the remaining vocabulary.</p>
+
 ### Workflow at a Glance
 
 1. Prepare raw datasets and construct cleaned semantic item structures.
