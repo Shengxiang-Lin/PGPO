@@ -1,15 +1,20 @@
-<h1 align="center">Prototype-Guided Progressive Obfuscation for Privacy-Preserving LLM-Enhanced Recommendation</h1>
+<h1 align="center">PGPO: Prototype-Guided Progressive Obfuscation for Privacy-Preserving LLM-Enhanced Recommendation</h1>
 
-## Overview
+<p align="center">
+  <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
+  <img src="https://img.shields.io/badge/Python-3.10+-green.svg" alt="Python 3.10+">
+  <img src="https://img.shields.io/badge/Framework-GRPO-orange.svg" alt="Framework: GRPO">
+  <img src="https://img.shields.io/badge/arXiv-Coming%20Soon-b31b1b.svg" alt="arXiv: Coming Soon">
+</p>
 
-This repository covers:
+PGPO is a privacy-preserving framework for LLM-enhanced recommendation. It constructs a vocabulary-level semantic graph, identifies high-influence prototype words, learns privacy-preserving prototype variants with Group Relative Policy Optimization (GRPO), and progressively propagates the learned obfuscation structure to the remaining vocabulary.
 
-- Data preprocessing pipelines for `MovieLens-1M` and `Amazon-Book`
-- LLM-based semantic edge construction and category-aware edge pruning
-- Prototype extraction and similarity computation for fine-grained item details
-- GRPO training for privacy-preserving variant generation
-- Downstream evaluation for embedding quality, recommendation performance, and inversion robustness
-- Reproducible experimental entry points for both semantic baselines and obfuscated variants
+The repository provides the complete pipeline for data preparation, semantic graph construction, prototype extraction, PGPO training, privacy-preserving variant generation, and downstream evaluation on MovieLens-1M and Amazon-Book.
+
+## 📰 News
+
+- **[Coming Soon]** The arXiv preprint and citation information will be released soon. Stay tuned.
+- **[2026.08]** The PGPO implementation and evaluation pipeline are publicly available.
 
 ## 🏗️ Architecture
 
@@ -19,202 +24,87 @@ This repository covers:
 
 <p align="left"><b>Figure 1.</b> Overview of PGPO. High-influence prototype words are first identified, and a vocabulary-level static semantic graph is constructed. The LLM then explores prototype obfuscation anchors under GRPO-based reward optimization and propagates them through the graph to the remaining vocabulary.</p>
 
-### Workflow at a Glance
+## 📄 Paper
 
-1. Prepare raw datasets and construct cleaned semantic item structures.
-2. Build prototype-level embeddings and similarity statistics for GRPO training.
-3. Train PGPO to generate privacy-preserving obfuscated variants.
-4. Evaluate the resulting variants from embedding, quality, recommendation, and defense perspectives.
+The arXiv preprint is being prepared and will be released soon. **Stay tuned.**
 
-## Environment Setup
+## ✨ Key Features
 
-This section prepares the runtime environment, base models, and raw datasets required by the preprocessing and evaluation pipelines.
+- **Prototype-aware semantic graph**: identifies structurally influential words and precomputes vocabulary-level semantic neighborhoods.
+- **GRPO-based variant exploration**: jointly optimizes semantic displacement, relational fidelity, and category validity.
+- **Progressive graph expansion**: propagates reliable prototype mappings from the semantic core to the full vocabulary.
+- **Context-aware generation cache**: uses finalized neighboring mappings as structural anchors during training and generation.
+- **End-to-end evaluation**: supports generation-quality analysis, recommendation evaluation, embedding inversion, and white-box source re-identification.
 
-### 1. Clone the Repository
+## 📁 Project Structure
 
-```bash
-git clone https://anonymous.4open.science/r/PGPO/
-cd PGPO
+```text
+PGPO/
+├── data/                              # Raw and processed datasets
+├── base_models/                       # Locally downloaded pretrained models
+├── generate_edges/                    # LLM-based semantic edge construction
+├── models/                            # PGPO datasets, rewards, cache, generator, and trainer
+├── evaluate/                          # Evaluation pipelines and documentation
+│   ├── embedding/                     # Item-text embedding construction
+│   ├── quality/                       # Word- and sentence-level quality evaluation
+│   ├── recsys/                        # Recommendation backends
+│   ├── attack/                        # Embedding inversion attacks
+│   ├── w2w_attack/                    # Replay-MLE white-box re-identification
+│   └── README.md                      # Complete evaluation guide
+├── figs/                              # Figures used in the documentation
+├── prepare_amazon_raw0.py             # Amazon-Book subset construction
+├── extract_id_name.py                 # Item ID-name extraction
+├── cut_item_edges.py                  # Category-aware semantic edge pruning
+├── compute_embeddings.py              # Prototype embeddings and similarity statistics
+├── train_grpo.py                      # PGPO training and variant generation
+├── download_base_models.py            # Base-model downloader
+├── requirements.txt                   # Python dependencies
+└── README.md
 ```
 
-### 2. Create the Python Environment
+## 🚀 Quick Start
+
+### 1. Installation
 
 ```bash
-conda create --prefix ./PGPO python=3.10 -y
-conda activate ./PGPO
+git clone https://github.com/Shengxiang-Lin/PGPO.git
+cd PGPO
+
+conda create -n pgpo python=3.10 -y
+conda activate pgpo
 pip install -r requirements.txt
 ```
 
-### 3. Download Base Models
+### 2. Download Base Models
 
 ```bash
 mkdir -p base_models
 python download_base_models.py
 ```
 
-## Data Preparation
+The downloader currently fetches Qwen3-4B-Base. Other models used by particular stages, such as BERT-base-uncased, Qwen2.5-14B-Instruct, T5-base, or a recommendation LLM, should be placed under `base_models/` or supplied through the corresponding command-line path argument.
 
-### MovieLens-1M
+### 3. Prepare Raw Data
 
-- Download `ml-1m.zip` from [MovieLens-1M](https://grouplens.org/datasets/movielens/1m/)
-- Extract files such as `ratings.dat`, `movies.dat`, and `users.dat`
-- Place them under `data/ml-1m/raw/`
+#### MovieLens-1M
 
-### Amazon-Book
-
-- Download the interaction file [Books.csv](https://mcauleylab.ucsd.edu/public_datasets/data/amazon_v2/categoryFilesSmall/Books.csv)
-- Download the metadata file [meta_Books.json.gz](https://jmcauley.ucsd.edu/data/amazon_v2/metaFiles2/meta_Books.json.gz)
-- Place both files under `data/amazon-book/raw/`
-
-### Expected Directory Layout
+Download [MovieLens-1M](https://grouplens.org/datasets/movielens/1m/), extract `ratings.dat`, `movies.dat`, and `users.dat`, and place them under:
 
 ```text
-PGPO/
-├── base_models/
-│   ├── Qwen3-4B-Base/
-│   └── ...
-├── data/
-│   ├── ml-1m/
-│   │   └── raw/
-│   └── amazon-book/
-│       └── raw/
-├── download_base_models.py
-├── extract_id_name.py
-├── prepare_amazon_raw0.py
-├── compute_embeddings.py
-└── ...
+data/ml-1m/raw/
 ```
 
-## Preprocessing Pipeline
+#### Amazon-Book
 
-This section converts raw datasets into the structured semantic resources required by PGPO. Most preprocessing scripts support two usage patterns:
+Download [Books.csv](https://mcauleylab.ucsd.edu/public_datasets/data/amazon_v2/categoryFilesSmall/Books.csv) and [meta_Books.json.gz](https://jmcauley.ucsd.edu/data/amazon_v2/metaFiles2/meta_Books.json.gz), and place them under:
 
-- Default-path mode: only specify `--dataset`, and the script uses built-in paths
-- Explicit-path mode: directly pass input and output paths as positional arguments
-
-### A. Amazon-Book Subset Construction
-
-Use the default preprocessing configuration:
-
-```bash
-python prepare_amazon_raw0.py --dataset amazon-book
+```text
+data/amazon-book/raw/
 ```
 
-A more controllable example:
+### 4. Run Data Preprocessing
 
-```bash
-python prepare_amazon_raw0.py \
-  --dataset amazon-book \
-  --mode window_freq_sample \
-  --start_date 2018-01-01 \
-  --end_date 2018-03-31 \
-  --target_items 10000 \
-  --min_item_freq 3 \
-  --min_user_freq 3 \
-  --seed 42
-```
-
-This script reads raw Amazon data and produces a filtered subset under `data/amazon-book/raw-0/`.
-
-### B. MovieLens-1M Raw Copy
-
-For the MovieLens pipeline, duplicate the raw directory as the initial processed snapshot:
-
-```bash
-cp -r data/ml-1m/raw data/ml-1m/raw-0
-```
-
-### C. Extract Item ID-Name Mapping
-
-Default usage for `MovieLens-1M`:
-
-```bash
-python extract_id_name.py --dataset ml-1m
-```
-
-Default usage for `Amazon-Book`:
-
-```bash
-python extract_id_name.py --dataset amazon-book
-```
-
-Explicit input and output paths:
-
-```bash
-python extract_id_name.py \
-  ./data/ml-1m/raw/movies.dat \
-  ./data/ml-1m/handled/id_item.json
-```
-
-This step generates an `id -> item_name` mapping file, which is the entry point for downstream semantic edge construction.
-
-### D. Generate Semantic Edges
-
-Run with dataset defaults:
-
-```bash
-python generate_edges/generate_edges_local.py --dataset ml-1m
-```
-
-Or provide custom arguments explicitly:
-
-```bash
-python generate_edges/generate_edges_local.py \
-  ./data/ml-1m/handled/id_item.json \
-  ./data/ml-1m/handled/item_edges.json \
-  ./base_models/Qwen2.5-14B-Instruct
-```
-
-This stage invokes the LLM to generate fine-grained semantic attributes for each item.
-
-### E. Prune Noisy Edges
-
-```bash
-python cut_item_edges.py --dataset ml-1m
-```
-
-Or:
-
-```bash
-python cut_item_edges.py \
-  ./data/ml-1m/handled/item_edges.json \
-  ./data/ml-1m/handled/cleaned_item_edges.json
-```
-
-This step removes low-quality or redundant category edges and retains a more stable semantic structure.
-
-### F. Compute Prototype Embeddings and Similarities
-
-Run with default paths:
-
-```bash
-python compute_embeddings.py --dataset ml-1m
-```
-
-Or specify all major inputs explicitly:
-
-```bash
-python compute_embeddings.py \
-  ./data/ml-1m/handled/cleaned_item_edges.json \
-  ./data/ml-1m/handled/extracted \
-  ./data/ml-1m/handled/extracted/grpo_dataset \
-  ./base_models/bert-base-uncased \
-  512 \
-  10 \
-  10000
-```
-
-This stage produces:
-
-- extracted fine-grained item details
-- embedding representations for those details
-- similarity statistics used by GRPO training
-
-## Quick Start Pipelines
-
-The following commands summarize the recommended preprocessing flow for each dataset.
-
-### MovieLens-1M
+#### MovieLens-1M
 
 ```bash
 cp -r data/ml-1m/raw data/ml-1m/raw-0
@@ -224,7 +114,7 @@ python cut_item_edges.py --dataset ml-1m
 python compute_embeddings.py --dataset ml-1m
 ```
 
-### Amazon-Book
+#### Amazon-Book
 
 ```bash
 python prepare_amazon_raw0.py --dataset amazon-book
@@ -234,23 +124,23 @@ python cut_item_edges.py --dataset amazon-book
 python compute_embeddings.py --dataset amazon-book
 ```
 
-## GRPO Training
+The preprocessing pipeline produces cleaned semantic edges, fine-grained vocabulary entries, prototype influence scores, embeddings, and neighborhood similarity files under `data/<dataset>/handled/`.
 
-Once the preprocessing stage is complete, you can train PGPO to generate privacy-preserving variants with dataset-aware default paths.
+## 🏋️ PGPO Training
 
-Launch training for MovieLens:
+Train and generate variants for MovieLens-1M:
 
 ```bash
 python train_grpo.py --dataset movielens
 ```
 
-Launch training for Amazon-Book:
+Train and generate variants for Amazon-Book:
 
 ```bash
 python train_grpo.py --dataset amazon-book
 ```
 
-A more explicit configuration example:
+A configurable example is shown below:
 
 ```bash
 python train_grpo.py \
@@ -258,280 +148,38 @@ python train_grpo.py \
   --model_name_or_path ./base_models/Qwen3-4B-Base \
   --learning_rate 5e-7 \
   --batch_size 2 \
-  --max_steps 10000 \
   --num_generations 8 \
+  --max_steps 10000 \
   --use_cache 1
 ```
 
-## Downstream Evaluation
+Default outputs are written to:
 
-All downstream evaluation code is located under `evaluate/`. This part measures the utility, quality, and privacy properties of the generated variants. Before running this section, make sure that:
-
-- the preprocessing pipeline has finished successfully
-- `cleaned_item_edges.json` and `id_item.json` are available under `data/<dataset>/handled/`
-- GRPO-generated variants are available if you want to evaluate obfuscated text embeddings (`v3`)
-
-### 1. Embedding Construction
-
-This stage converts item text into dense item embeddings for downstream tasks. The generated files are saved to:
-
-- `evaluate/embedding/data/<dataset>/v2/`
-- `evaluate/embedding/data/<dataset>/v3/`
-
-Each variant directory contains:
-
-- `item_embeddings.npy`
-- `item_id_map.json`
-- `item_content.json`
-
-Generate the semantic baseline embedding (`v2`):
-
-```bash
-cd evaluate/embedding
-python generate_item_embeddings_v2.py --dataset ml-1m
-python generate_item_embeddings_v2.py --dataset amazon-book
+```text
+output/grpo_model/movielens/
+output/grpo_model/amazon-book/
+output/generated_variants_movielens.json
+output/generated_variants_amazon-book.json
 ```
 
-Generate the obfuscated embedding (`v3`) from GRPO variants:
+## 📊 Evaluation
 
-```bash
-cd evaluate/embedding
-python generate_item_embeddings_v3.py --dataset ml-1m
-python generate_item_embeddings_v3.py --dataset amazon-book
-```
+Evaluation instructions have been moved to **[evaluate/README.md](evaluate/README.md)**. The guide covers:
 
-If you want to evaluate a custom variant file, `generate_item_embeddings_v3.py` supports explicit input override:
+- semantic and obfuscated item-embedding construction;
+- word- and sentence-level variant quality;
+- SASRec, LightGCN, FREEDOM, LightGT, TALLRec, and LLaRA evaluation;
+- Vec2Text-style embedding inversion;
+- Replay-MLE-NoHistory white-box source re-identification.
 
-```bash
-python generate_item_embeddings_v3.py \
-  --dataset ml-1m \
-  --input /path/to/generated_variants.json \
-  --version_name v3_custom
-```
+## 📄 License
 
-### 2. Obfuscated Variants Quality
+This project is licensed under the [MIT License](LICENSE).
 
-This part evaluates generated variants from lexical, semantic, and distributional perspectives. The relevant scripts are under `evaluate/quality/`.
+## 🙏 Acknowledgments
 
-```bash
-cd evaluate/quality
-```
+This repository builds on open-source resources and models including [Qwen](https://github.com/QwenLM/Qwen), [Transformers](https://github.com/huggingface/transformers), [TRL](https://github.com/huggingface/trl), [PEFT](https://github.com/huggingface/peft), [Unsloth](https://github.com/unslothai/unsloth), and [Vec2Text](https://github.com/vec2text/vec2text).
 
-Word-level quality evaluation:
+## 📚 Citation
 
-```bash
-python test_word.py \
-  --generated_file /path/to/generated_variants.json \
-  --output_file ./reports/word_quality.json
-```
-
-Semantic preservation and category-structure evaluation:
-
-```bash
-python evaluate_grpo_variants.py \
-  --generated_file /path/to/generated_variants.json \
-  --output_file ./reports/grpo_variant_eval.json
-```
-
-Sentence-level fluency, diversity, and coherence evaluation for item texts:
-
-```bash
-python test_sentence.py \
-  --input_file ../embedding/data/ml-1m/v3/item_content.json \
-  --output_file ./reports/v3_sentence_quality.json
-```
-
-KL divergence against the `v2` semantic baseline:
-
-```bash
-python calculate_sentence_kl_vs_v2.py \
-  --dataset ml-1m \
-  v3
-```
-
-Notes:
-
-- `test_word.py` and `evaluate_grpo_variants.py` expect a JSON array with fields such as `original_word`, `variant`, and `category`
-- `test_sentence.py` accepts either a JSON object or a JSON list of texts
-- `calculate_sentence_kl_vs_v2.py` compares `item_content.json` in the target variant directory against the `v2` baseline under `../embedding/data/<dataset>/`
-
-### 3. Recommendation Performance
-
-Recommendation evaluation is implemented under `evaluate/recsys/` with three families of backends:
-
-- `multi/`: multimodal baselines such as MMRec FREEDOM and LightGT
-- `recbole/`: RecBole-based recommenders such as SASRec and LightGCN
-- `llara/`: LLaRA-style semantic recommendation pipeline
-
-#### Multi-Modal Baselines
-
-Prepare interaction splits for multimodal recommenders:
-
-```bash
-cd evaluate/recsys/multi
-python preprocess.py --dataset ml-1m
-python preprocess.py --dataset amazon-book
-```
-
-Run MMRec FREEDOM/BPR with semantic item embeddings:
-
-```bash
-python run_mmrec_freedom.py \
-  --dataset ml-1m \
-  --edge_variant v2 \
-  --embedding_root ../../embedding/data
-```
-
-Run LightGT:
-
-```bash
-python run_lightgt.py \
-  --dataset ml-1m \
-  --edge_variant v2 \
-  --embedding_root ../../../embedding/data
-```
-
-Notes:
-
-- `run_mmrec_freedom.py` uses `v0` as the no-text baseline and `v2`/`v3` as text-enhanced variants
-- `run_lightgt.py` forwards `edge_variant` to `LightGT/main.py`, so `v2` and `v3` can be compared directly
-
-#### RecBole Backends
-
-Prepare RecBole-format data:
-
-```bash
-cd ../recbole
-python preprocess_recbole_data.py --dataset ml-1m
-python preprocess_recbole_data.py --dataset amazon-book
-```
-
-Train and evaluate a RecBole model with pretrained item embeddings:
-
-```bash
-python train_eval_recbole.py \
-  --model sasrec \
-  --dataset ml1m_recbole \
-  --embedding_variant v2 \
-  --data_path ./data/recbole \
-  --embedding_root ../../embedding
-```
-
-You can replace `sasrec` with `two_tower`, `deepfm`, `neumf`, or `lightgcn`.
-
-#### LLaRA Evaluation
-
-Prepare sequence data aligned with a chosen embedding variant:
-
-```bash
-cd ../llara
-python preprocess_llara_data.py --dataset ml-1m --embedding_variant v2
-python preprocess_llara_data.py --dataset amazon-book --embedding_variant v2
-```
-
-Train and test the LLaRA pipeline:
-
-```bash
-bash train_semantic.sh v2 generate ml-1m /path/to/your/llm
-bash test_semantic.sh v2 generate ml-1m /path/to/your/llm
-```
-
-Notes:
-
-- `preprocess_llara_data.py` reads embeddings from `evaluate/embedding/data/<dataset>/<variant>/`
-- the shell scripts default to an external model path, so in practice you should pass your own local LLM path explicitly
-
-### 4. Embedding Inversion Defense
-
-The embedding inversion defense pipeline is implemented under `evaluate/attack/`. Its goal is to measure how difficult it is to recover category or semantic information from released item embeddings.
-
-```bash
-cd evaluate/attack
-```
-
-The full pipeline contains four steps.
-
-#### Step 1. Build Attack Dataset
-
-If the raw attack data has already been prepared under `evaluate/attack/data/<dataset>/raw/`, convert it to the processed `[id, item_category]` format:
-
-```bash
-python create_dataset.py --dataset movie
-python create_dataset.py --dataset book
-```
-
-Notes:
-
-- here the dataset names are `movie` and `book`, not `ml-1m` and `amazon-book`
-- if you still need to construct the raw attack dataset itself, see `evaluate/attack/InvInst_dataset/`
-
-#### Step 2. Inject Embeddings
-
-Generate attack inputs from the train split or load external embeddings for the test split:
-
-```bash
-python process_data.py \
-  --dataset movie \
-  --target_split train \
-  --embedding_type v2 \
-  --train_model_name_or_path ../../../base_models/bert-base-uncased
-```
-
-```bash
-python process_data.py \
-  --dataset movie \
-  --target_split test \
-  --embedding_type v2 \
-  --embedding_root ../embedding/data/ml-1m
-```
-
-Notes:
-
-- `train` split creates embeddings locally from raw text features
-- `test` split loads embeddings from an external embedding directory such as `evaluate/embedding/data/ml-1m`
-- `process_data.py` contains environment-specific defaults pointing to another workspace, so it is recommended to pass `--train_model_name_or_path` and `--embedding_root` explicitly
-
-#### Step 3. Train the Inversion Model
-
-Prepare vec2text-style training data and train the local inversion model:
-
-```bash
-python train_vector2text.py \
-  --dataset movie \
-  --stage all \
-  --split train \
-  --version v2 \
-  --model_name_or_path /path/to/t5-base
-```
-
-This script first prepares `jsonl` training files and then trains a T5-based inversion model with a learned projector.
-
-#### Step 4. Evaluate Inversion Robustness
-
-Evaluate the trained inversion model on the processed embeddings:
-
-```bash
-python evaluate.py \
-  --dataset movie \
-  --split test \
-  --version v2 \
-  --eval_mode local \
-  --save_predictions
-```
-
-If you want to evaluate with the official `vec2text` API instead of the local model:
-
-```bash
-python evaluate.py \
-  --dataset movie \
-  --split test \
-  --version v2 \
-  --eval_mode vec2text
-```
-
-The evaluation script reports metrics such as:
-
-- exact match accuracy
-- edit similarity
-- label set overlap precision / recall / F1
-- Jaccard similarity on recovered category labels
+The BibTeX entry will be provided when the arXiv preprint is released. **Stay tuned.**

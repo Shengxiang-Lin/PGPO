@@ -13,7 +13,7 @@ bitsandbytes>=0.40.0
 vllm==0.11.2
 unsloth
 xformers==0.0.33.post1
-fire==-0.7.1
+fire==0.7.1
 matplotlib
 deepspeed==0.18.7
 POT
