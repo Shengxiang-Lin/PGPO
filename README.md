@@ -6,14 +6,14 @@
 [Jiajie Su](https://scholar.google.com/citations?hl=zh-CN&user=tn09CCIAAAAJ&view_op=list_works&sortby=pubdate)<sup>1</sup>, 
 [Pengyang Zhou](https://scholar.google.com/citations?hl=zh-CN&user=3LnDqE4AAAAJ&view_op=list_works&sortby=pubdate)<sup>1</sup>, 
 [Xiang Chen](https://scholar.google.com/citations?user=ZMdsjDUAAAAJ&hl=zh-CN&oi=sra)<sup>1</sup>, 
-[Xiaolin Zheng](https://person.zju.edu.cn/xlzheng#0)<sup>1,*</sup>, 
-[Feng Tian](https://www.xjtu.edu.cn/jsnr.jsp?wbtreeid=1632&wbwbxjtuteacherid=1473)<sup>2,*</sup>,
+[Xiaolin Zheng](https://person.zju.edu.cn/xlzheng#0)<sup>1,&#42;</sup>, 
+[Feng Tian](https://www.xjtu.edu.cn/jsnr.jsp?wbtreeid=1632&wbwbxjtuteacherid=1473)<sup>2,&#42;</sup>,
 [Chaochao Chen](https://person.zju.edu.cn/zjuccc)<sup>1</sup>
 
 <sup>1</sup>[Zhejiang University](https://www.zju.edu.cn/), 
 <sup>2</sup>[Xi'an Jiaotong University](https://www.xjtu.edu.cn/), 
 
-<sup>*</sup>Corresponding Author
+<sup>&#42;</sup> Corresponding Authors
 
 </div>
 
