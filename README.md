@@ -2,18 +2,18 @@
 
 # PGPO: Prototype-Guided Progressive Obfuscation for Privacy-Preserving LLM-Enhanced Recommendation
 
-[Shengxiang Lin](https://Shengxiang-Lin.github.io/)1, 
-[Jiajie Su](https://scholar.google.com/citations?hl=zh-CN&user=tn09CCIAAAAJ&view_op=list_works&sortby=pubdate)1, 
-[Pengyang Zhou](https://scholar.google.com/citations?hl=zh-CN&user=3LnDqE4AAAAJ&view_op=list_works&sortby=pubdate)1, 
-[Xiang Chen](https://scholar.google.com/citations?user=ZMdsjDUAAAAJ&hl=zh-CN&oi=sra)1, 
-[Xiaolin Zheng](https://person.zju.edu.cn/xlzheng#0)1,\*, 
-[Feng Tian](https://www.xjtu.edu.cn/jsnr.jsp?wbtreeid=1632&wbwbxjtuteacherid=1473)2,\*,
-[Chaochao Chen](https://person.zju.edu.cn/zjuccc)1
+[Shengxiang Lin](https://Shengxiang-Lin.github.io/)<sup>1</sup>, 
+[Jiajie Su](https://scholar.google.com/citations?hl=zh-CN&user=tn09CCIAAAAJ&view_op=list_works&sortby=pubdate)<sup>1</sup>, 
+[Pengyang Zhou](https://scholar.google.com/citations?hl=zh-CN&user=3LnDqE4AAAAJ&view_op=list_works&sortby=pubdate)<sup>1</sup>, 
+[Xiang Chen](https://scholar.google.com/citations?user=ZMdsjDUAAAAJ&hl=zh-CN&oi=sra)<sup>1</sup>, 
+[Xiaolin Zheng](https://person.zju.edu.cn/xlzheng#0)<sup>1</sup><sup>*</sup>, 
+[Feng Tian](https://www.xjtu.edu.cn/jsnr.jsp?wbtreeid=1632&wbwbxjtuteacherid=1473)<sup>2</sup><sup>*</sup>,
+[Chaochao Chen](https://person.zju.edu.cn/zjuccc)<sup>1</sup>
 
-1[Zhejiang University](https://www.zju.edu.cn/), 
-2[Xi'an Jiaotong University](https://www.xjtu.edu.cn/), 
+<sup>1</sup>[Zhejiang University](https://www.zju.edu.cn/), 
+<sup>2</sup>[Xi'an Jiaotong University](https://www.xjtu.edu.cn/), 
 
-\*Corresponding Author
+<sup>*</sup>Corresponding Author
 
 </div>
 
