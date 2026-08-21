@@ -32,7 +32,8 @@ The repository provides the complete pipeline for data preparation, semantic gra
 ## 📰 News
 
 - **[Coming Soon]** The arXiv preprint and citation information will be released soon. Stay tuned.
-- **[2026.08]** The PGPO implementation and evaluation pipeline are publicly available.
+- **[2026.08]** 🎉 PGPO is accepted to EMNLP 2026 as a Main Conference paper.
+- **[2026.06]** The PGPO implementation and evaluation pipeline are publicly available.
 
 ## 🏗️ Architecture
 
