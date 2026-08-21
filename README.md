@@ -1,4 +1,22 @@
-<h1 align="center">PGPO: Prototype-Guided Progressive Obfuscation for Privacy-Preserving LLM-Enhanced Recommendation</h1>
+<div align="center">
+
+# PGPO: Prototype-Guided Progressive Obfuscation for Privacy-Preserving LLM-Enhanced Recommendation
+
+[Shengxiang Lin](https://Shengxiang-Lin.github.io/)1, 
+[Jiajie Su](https://scholar.google.com/citations?hl=zh-CN&user=tn09CCIAAAAJ&view_op=list_works&sortby=pubdate)1, 
+[Pengyang Zhou](https://scholar.google.com/citations?hl=zh-CN&user=3LnDqE4AAAAJ&view_op=list_works&sortby=pubdate)1, 
+[Xiang Chen](https://scholar.google.com/citations?user=ZMdsjDUAAAAJ&hl=zh-CN&oi=sra)1, 
+[Xiaolin Zheng](https://person.zju.edu.cn/xlzheng#0)1,\*, 
+[Feng Tian](https://www.xjtu.edu.cn/jsnr.jsp?wbtreeid=1632&wbwbxjtuteacherid=1473)2,\*,
+[Chaochao Chen](https://person.zju.edu.cn/zjuccc)1
+
+1[Zhejiang University](https://www.zju.edu.cn/), 
+2[Xi'an Jiaotong University](https://www.xjtu.edu.cn/), 
+
+\*Corresponding Author
+
+</div>
+
 
 <p align="center">
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
