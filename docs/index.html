@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="PGPO preserves the relational structure of item side information while protecting LLM-enhanced recommenders against embedding inversion attacks.">
+  <meta name="keywords" content="PGPO, privacy-preserving recommendation, LLM-enhanced recommendation, relational fidelity, embedding inversion, GRPO">
+  <meta name="author" content="Shengxiang Lin, Jiajie Su, Pengyang Zhou, Xiang Chen, Xiaolin Zheng, Feng Tian, Chaochao Chen">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="PGPO: Prototype-Guided Progressive Obfuscation">
+  <meta property="og:description" content="Privacy-preserving LLM-enhanced recommendation through relational-fidelity obfuscation.">
+  <meta property="og:url" content="https://shengxiang-lin.github.io/PGPO/">
+  <meta property="og:image" content="https://shengxiang-lin.github.io/PGPO/assets/framework.webp">
+  <meta property="og:image:alt" content="Overview of the PGPO framework">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="citation_title" content="PGPO: Prototype-Guided Progressive Obfuscation for Privacy-Preserving LLM-Enhanced Recommendation">
+  <meta name="citation_author" content="Lin, Shengxiang">
+  <meta name="citation_author" content="Su, Jiajie">
+  <meta name="citation_author" content="Zhou, Pengyang">
+  <meta name="citation_author" content="Chen, Xiang">
+  <meta name="citation_author" content="Zheng, Xiaolin">
+  <meta name="citation_author" content="Tian, Feng">
+  <meta name="citation_author" content="Chen, Chaochao">
+  <meta name="citation_conference_title" content="EMNLP 2026">
+  <meta name="citation_publication_date" content="2026">
+
+  <link rel="canonical" href="https://shengxiang-lin.github.io/PGPO/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>PGPO | Privacy-Preserving LLM-Enhanced Recommendation</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "PGPO: Prototype-Guided Progressive Obfuscation for Privacy-Preserving LLM-Enhanced Recommendation",
+    "author": [
+      {"@type": "Person", "name": "Shengxiang Lin"},
+      {"@type": "Person", "name": "Jiajie Su"},
+      {"@type": "Person", "name": "Pengyang Zhou"},
+      {"@type": "Person", "name": "Xiang Chen"},
+      {"@type": "Person", "name": "Xiaolin Zheng"},
+      {"@type": "Person", "name": "Feng Tian"},
+      {"@type": "Person", "name": "Chaochao Chen"}
+    ],
+    "datePublished": "2026",
+    "isAccessibleForFree": true,
+    "url": "https://shengxiang-lin.github.io/PGPO/",
+    "codeRepository": "https://github.com/Shengxiang-Lin/PGPO"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="hero" id="top">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <svg class="hero-network" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g class="network-lines">
+        <path d="M60 560L245 445L420 520L595 380L760 465L940 300L1130 390L1325 230L1540 340"/>
+        <path d="M25 735L220 625L420 690L595 565L785 650L970 515L1170 610L1370 485L1580 570"/>
+        <path d="M245 445L220 625M420 520L420 690M595 380L595 565M760 465L785 650M940 300L970 515M1130 390L1170 610M1325 230L1370 485"/>
+      </g>
+      <g class="network-nodes">
+        <circle cx="245" cy="445" r="13"/><circle cx="420" cy="520" r="9"/><circle cx="595" cy="380" r="17"/>
+        <circle cx="760" cy="465" r="10"/><circle cx="940" cy="300" r="15"/><circle cx="1130" cy="390" r="10"/>
+        <circle cx="1325" cy="230" r="18"/><circle cx="220" cy="625" r="8"/><circle cx="420" cy="690" r="14"/>
+        <circle cx="595" cy="565" r="8"/><circle cx="785" cy="650" r="16"/><circle cx="970" cy="515" r="9"/>
+        <circle cx="1170" cy="610" r="14"/><circle cx="1370" cy="485" r="9"/>
+      </g>
+    </svg>
+
+    <nav class="nav shell" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="PGPO home">
+        <span class="brand-mark" aria-hidden="true">P</span>
+        <span>PGPO</span>
+      </a>
+      <div class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a href="#citation">Citation</a>
+      </div>
+    </nav>
+
+    <div class="hero-content shell">
+      <div class="venue-pill"><span></span> EMNLP 2026 · Main Conference</div>
+      <h1><span class="title-accent">PGPO:</span> Prototype-Guided Progressive Obfuscation for Privacy-Preserving LLM-Enhanced Recommendation</h1>
+      <p class="hero-kicker">Shift semantics. Preserve relations. Protect recommendations.</p>
+
+      <div class="authors" aria-label="Authors">
+        <a href="https://shengxiang-lin.github.io/" target="_blank" rel="noopener">Shengxiang Lin<sup>1</sup></a>
+        <a href="https://scholar.google.com/citations?hl=zh-CN&amp;user=tn09CCIAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Jiajie Su<sup>1</sup></a>
+        <a href="https://scholar.google.com/citations?hl=zh-CN&amp;user=3LnDqE4AAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Pengyang Zhou<sup>1</sup></a>
+        <a href="https://scholar.google.com/citations?user=ZMdsjDUAAAAJ&amp;hl=zh-CN&amp;oi=sra" target="_blank" rel="noopener">Xiang Chen<sup>1</sup></a>
+        <a href="https://person.zju.edu.cn/xlzheng#0" target="_blank" rel="noopener">Xiaolin Zheng<sup>1,*</sup></a>
+        <a href="https://www.xjtu.edu.cn/jsnr.jsp?wbtreeid=1632&amp;wbwbxjtuteacherid=1473" target="_blank" rel="noopener">Feng Tian<sup>2,*</sup></a>
+        <a href="https://person.zju.edu.cn/zjuccc" target="_blank" rel="noopener">Chaochao Chen<sup>1</sup></a>
+      </div>
+
+      <div class="affiliations">
+        <span><sup>1</sup> Zhejiang University</span>
+        <span><sup>2</sup> Xi'an Jiaotong University</span>
+        <span class="corresponding"><sup>*</sup> Corresponding Authors</span>
+      </div>
+
+      <div class="hero-actions">
+        <a class="button button-primary" href="https://github.com/Shengxiang-Lin/PGPO" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.87c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.9 1.53 2.35 1.09 2.92.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.64 0 0 .84-.27 2.75 1.02A9.57 9.57 0 0 1 12 6.82a9.6 9.6 0 0 1 2.5.34c1.91-1.29 2.75-1.02 2.75-1.02.55 1.37.2 2.39.1 2.64.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.68-4.57 4.93.36.31.68.92.68 1.86v2.76c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+          Code
+        </a>
+        <a class="button button-light" href="https://github.com/Shengxiang-Lin/PGPO" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h8l4 4v16H6V2Zm8 1.5V7h3.5M9 11h6M9 15h6M9 19h4"/></svg>
+          Paper <small>arXiv soon</small>
+        </a>
+        <a class="button button-light" href="https://github.com/Shengxiang-Lin/PGPO/tree/main/evaluate" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9m5 10V5m5 14v-7m5 7V3"/></svg>
+          Evaluation
+        </a>
+      </div>
+    </div>
+
+    <a class="scroll-cue" href="#overview" aria-label="Scroll to overview"><span></span></a>
+  </header>
+
+  <main id="main">
+    <section class="section section-intro" id="overview">
+      <div class="shell narrow">
+        <div class="eyebrow">The central idea</div>
+        <h2>Privacy needs a different kind of fidelity.</h2>
+        <p class="lead">LLM-enhanced recommenders benefit from semantic item embeddings, but those embeddings can expose sensitive textual attributes through inversion attacks. PGPO moves beyond preserving literal meaning: it protects individual content while retaining the <strong>relative semantic topology</strong> that recommendation models actually need.</p>
+
+        <div class="definition-card">
+          <div class="definition-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><circle cx="14" cy="32" r="7"/><circle cx="34" cy="15" r="7"/><circle cx="49" cy="39" r="7"/><path d="M20 27l8-7m11 1l7 12M21 34l21 4"/></svg>
+          </div>
+          <div>
+            <span>Relational fidelity</span>
+            <p>Induce sufficient semantic shift for privacy while preserving local neighborhood order and inter-item relationships for utility.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="motivation">
+      <div class="shell split">
+        <div class="split-copy">
+          <div class="eyebrow">Motivation</div>
+          <h2>Hide the text, not the structure.</h2>
+          <p>Semantic embeddings can make item side information useful to downstream recommenders, yet the same representations may reveal their sources. Conventional word-level perturbations treat items independently and can shatter the semantic neighborhoods that connect cold and popular items.</p>
+          <p>PGPO instead reconstructs a usable semantic skeleton: variants move away from their source words, while their relative relationships remain available to the recommender.</p>
+          <ul class="check-list">
+            <li>Input-side protection before third-party LLM processing</li>
+            <li>Topology-aware rather than token-isolated obfuscation</li>
+            <li>Explicit privacy-utility optimization under aligned perturbation</li>
+          </ul>
+        </div>
+        <figure class="media-card motivation-card">
+          <img src="assets/motivation.webp" alt="Motivation for relational-fidelity obfuscation" loading="lazy">
+          <figcaption>Relational-fidelity obfuscation shifts exposed attributes while preserving the item relations used for recommendation.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="method">
+      <div class="shell">
+        <div class="section-heading">
+          <div class="eyebrow">Method</div>
+          <h2>Prototype-guided, progressive, and topology-aware.</h2>
+          <p>PGPO concentrates optimization on structurally influential prototypes, then propagates their learned mappings from the semantic core to the full vocabulary.</p>
+        </div>
+
+        <div class="steps" aria-label="PGPO stages">
+          <article class="step">
+            <span class="step-number">01</span>
+            <h3>Build the graph</h3>
+            <p>Identify high-influence prototype words and precompute a static vocabulary-level semantic neighbor graph.</p>
+          </article>
+          <article class="step">
+            <span class="step-number">02</span>
+            <h3>Explore anchors</h3>
+            <p>Use GRPO to learn privacy-preserving prototype variants that form stable structural anchors.</p>
+          </article>
+          <article class="step">
+            <span class="step-number">03</span>
+            <h3>Expand outward</h3>
+            <p>Condition on finalized neighbors and progressively propagate the anchored structure to non-prototype words.</p>
+          </article>
+        </div>
+
+        <figure class="framework media-card">
+          <img src="assets/framework.webp" alt="Three-stage PGPO framework and reward functions" loading="lazy">
+          <figcaption>PGPO couples prototype-aware graph construction, GRPO-based variant exploration, and anchor-oriented graph expansion with a global shared cache.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section-dark" id="rewards">
+      <div class="shell">
+        <div class="section-heading light">
+          <div class="eyebrow">Reward-guided optimization</div>
+          <h2>Three signals, one privacy-utility objective.</h2>
+        </div>
+        <div class="reward-grid">
+          <article class="reward-card coral">
+            <span>R<sub>dis</sub></span>
+            <h3>Individual dissimilarity</h3>
+            <p>Push each generated variant away from its source embedding to weaken local reconstruction and re-identification.</p>
+          </article>
+          <article class="reward-card blue">
+            <span>R<sub>str</sub></span>
+            <h3>Structural consistency</h3>
+            <p>Preserve neighborhood rankings and pairwise similarity distributions across original and obfuscated spaces.</p>
+          </article>
+          <article class="reward-card gold">
+            <span>R<sub>con</sub></span>
+            <h3>Semantic constraint</h3>
+            <p>Keep variants inside category-specific manifolds, preventing invalid or degenerate shortcuts during exploration.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-results" id="results">
+      <div class="shell">
+        <div class="section-heading">
+          <div class="eyebrow">Results</div>
+          <h2>Strong privacy with near-upper-bound recommendation utility.</h2>
+          <p>Experiments on MovieLens-1M and Amazon-Book cover variant quality, six downstream recommenders, embedding inversion, and a white-box Replay-MLE attacker.</p>
+        </div>
+
+        <div class="metric-grid">
+          <article class="metric-card">
+            <div class="metric-value">0.1981</div>
+            <div class="metric-label">MovieLens-1M Spearman</div>
+            <p>Highest local structural correlation among compared obfuscation methods.</p>
+          </article>
+          <article class="metric-card">
+            <div class="metric-value">0.1808</div>
+            <div class="metric-label">Amazon-Book Spearman</div>
+            <p>Maintains relational topology under strong semantic displacement.</p>
+          </article>
+          <article class="metric-card">
+            <div class="metric-value">&lt; 2%</div>
+            <div class="metric-label">Typical utility drop</div>
+            <p>Versus raw descriptions for traditional collaborative filtering models.</p>
+          </article>
+          <article class="metric-card">
+            <div class="metric-value">&gt; 50%</div>
+            <div class="metric-label">Attack-success reduction</div>
+            <p>All evaluated obfuscation methods substantially reduce inversion success; PGPO retains stronger utility.</p>
+          </article>
+        </div>
+
+        <div class="embedding-grid">
+          <figure class="media-card">
+            <img src="assets/tsne-movielens.webp" alt="T-SNE visualization of MovieLens-1M item embeddings" loading="lazy">
+            <figcaption>MovieLens-1M item embeddings</figcaption>
+          </figure>
+          <figure class="media-card">
+            <img src="assets/tsne-amazon.webp" alt="T-SNE visualization of Amazon-Book item embeddings" loading="lazy">
+            <figcaption>Amazon-Book item embeddings</figcaption>
+          </figure>
+        </div>
+
+        <p class="results-note">The visual separation of method-specific embeddings shows strong semantic displacement. PGPO's recommendation performance indicates that the relational structure needed downstream remains usable.</p>
+      </div>
+    </section>
+
+    <section class="section section-tint" id="resources">
+      <div class="shell resource-shell">
+        <div>
+          <div class="eyebrow">Open-source pipeline</div>
+          <h2>From semantic graph construction to white-box evaluation.</h2>
+          <p>The repository includes preprocessing, prototype extraction, GRPO training, progressive generation, recommendation backends, Vec2Text-style inversion, and Replay-MLE source re-identification.</p>
+        </div>
+        <div class="resource-actions">
+          <a href="https://github.com/Shengxiang-Lin/PGPO" target="_blank" rel="noopener">Explore the code <span>↗</span></a>
+          <a href="https://github.com/Shengxiang-Lin/PGPO/tree/main/evaluate" target="_blank" rel="noopener">Read the evaluation guide <span>↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="citation">
+      <div class="shell narrow">
+        <div class="citation-heading">
+          <div>
+            <div class="eyebrow">Citation</div>
+            <h2>BibTeX</h2>
+          </div>
+          <button class="copy-button" type="button" data-copy="bibtex" aria-label="Copy BibTeX citation">
+            <span class="copy-icon" aria-hidden="true">⧉</span>
+            <span class="copy-label">Copy</span>
+          </button>
+        </div>
+        <p class="citation-note">Preliminary citation. The official BibTeX will be updated when the paper is released on arXiv and in the proceedings.</p>
+        <pre id="bibtex"><code>@inproceedings{lin2026pgpo,
+  title     = {PGPO: Prototype-Guided Progressive Obfuscation for
+               Privacy-Preserving LLM-Enhanced Recommendation},
+  author    = {Lin, Shengxiang and Su, Jiajie and Zhou, Pengyang and
+               Chen, Xiang and Zheng, Xiaolin and Tian, Feng and Chen, Chaochao},
+  booktitle = {Proceedings of EMNLP},
+  year      = {2026}
+}</code></pre>
+      </div>
+    </section>
+
+    <section class="section section-footer-info">
+      <div class="shell footer-info-grid">
+        <div>
+          <h2>Acknowledgments</h2>
+          <p>This work was supported by the National Natural Science Foundation of China (Nos. 72192823, 62177038, and 62522217).</p>
+        </div>
+        <div>
+          <h2>Contact</h2>
+          <p>Questions and collaborations are welcome.</p>
+          <a href="mailto:reallinshengxiang@gmail.com">reallinshengxiang@gmail.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-row">
+      <div><strong>PGPO</strong> · Privacy-Preserving LLM-Enhanced Recommendation</div>
+      <div>© 2026 PGPO Project · <a href="https://github.com/Shengxiang-Lin/PGPO" target="_blank" rel="noopener">MIT License</a></div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" type="button" aria-label="Back to top">↑</button>
+
+  <script>
+    const copyButton = document.querySelector('[data-copy="bibtex"]');
+    copyButton.addEventListener('click', async () => {
+      const text = document.getElementById('bibtex').innerText;
+      try {
+        await navigator.clipboard.writeText(text);
+        copyButton.classList.add('copied');
+        copyButton.querySelector('.copy-label').textContent = 'Copied';
+        setTimeout(() => {
+          copyButton.classList.remove('copied');
+          copyButton.querySelector('.copy-label').textContent = 'Copy';
+        }, 1800);
+      } catch (_) {
+        window.getSelection().selectAllChildren(document.getElementById('bibtex'));
+      }
+    });
+
+    const backToTop = document.querySelector('.back-to-top');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 700);
+    }, { passive: true });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</body>
+</html>
