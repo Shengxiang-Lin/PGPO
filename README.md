@@ -22,7 +22,7 @@
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
   <img src="https://img.shields.io/badge/Python-3.10+-green.svg" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/Framework-GRPO-orange.svg" alt="Framework: GRPO">
-  <img src="https://img.shields.io/badge/Paper-EMNLP%20DL-8B0000" alt="Paper"></a>
+  <img src="https://img.shields.io/badge/Paper-EMNLP-8B0000" alt="Paper"></a>
   <img src="https://img.shields.io/badge/arXiv-Coming%20Soon-b31b1b.svg" alt="arXiv: Coming Soon">
 </p>
 
