@@ -184,7 +184,7 @@ output/generated_variants_amazon-book.json
 
 ## 📦 Model Weights
 
-The trained model weights on MovieLens-1M and Amazon-Book are available at: [[🤗](https://huggingface.co/Shengxiang-Lin/PGPO)]
+The trained model weights on MovieLens-1M and Amazon-Book are available at: [🤗](https://huggingface.co/Shengxiang-Lin/PGPO)
 
 ## 📊 Evaluation
 
