@@ -26,7 +26,7 @@
   <img src="https://img.shields.io/badge/arXiv-Coming%20Soon-b31b1b.svg" alt="arXiv: Coming Soon">
 </p>
 
-PGPO is a privacy-preserving framework for LLM-enhanced recommendation. It constructs a vocabulary-level semantic graph, identifies high-influence prototype words, learns privacy-preserving prototype variants with Group Relative Policy Optimization (GRPO), and progressively propagates the learned obfuscation structure to the remaining vocabulary.
+PGPO is a privacy-preserving framework for LLM-enhanced recommendation. It constructs a vocabulary-level semantic graph, identifies high-influence prototype words, learns privacy-preserving prototype variants with Group Relative Policy Optimization, and progressively propagates the learned obfuscation structure to the remaining vocabulary.
 
 The repository provides the complete pipeline for data preparation, semantic graph construction, prototype extraction, PGPO training, privacy-preserving variant generation, and downstream evaluation on MovieLens-1M and Amazon-Book.
 
