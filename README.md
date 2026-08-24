@@ -169,8 +169,8 @@ python train_grpo.py \
   --learning_rate 5e-7 \
   --batch_size 2 \
   --num_generations 8 \
-  --max_steps 10000 \
-  --use_cache 1
+  --max_steps 5000 \
+  --use_cache 2000
 ```
 
 Default outputs are written to:
@@ -181,6 +181,10 @@ output/grpo_model/amazon-book/
 output/generated_variants_movielens.json
 output/generated_variants_amazon-book.json
 ```
+
+## 📦 Model Weights
+
+The trained model weights on MovieLens-1M and Amazon-Book are available at: [[🤗](https://huggingface.co/Shengxiang-Lin/PGPO)]
 
 ## 📊 Evaluation
 
