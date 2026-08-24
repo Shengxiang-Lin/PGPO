@@ -11,7 +11,7 @@
 [Chaochao Chen](https://person.zju.edu.cn/zjuccc)<sup>1</sup>
 
 <sup>1</sup>[Zhejiang University](https://www.zju.edu.cn/), 
-<sup>2</sup>[Xi'an Jiaotong University](https://www.xjtu.edu.cn/), 
+<sup>2</sup>[Xi'an Jiaotong University](https://www.xjtu.edu.cn/) 
 
 <sup>&#42;</sup> Corresponding Authors
 
@@ -22,6 +22,7 @@
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
   <img src="https://img.shields.io/badge/Python-3.10+-green.svg" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/Framework-GRPO-orange.svg" alt="Framework: GRPO">
+  <img src="https://img.shields.io/badge/Paper-EMNLP%20DL-8B0000" alt="Paper"></a>
   <img src="https://img.shields.io/badge/arXiv-Coming%20Soon-b31b1b.svg" alt="arXiv: Coming Soon">
 </p>
 
@@ -183,7 +184,7 @@ output/generated_variants_amazon-book.json
 
 ## 📊 Evaluation
 
-Evaluation instructions have been moved to **[evaluate/README.md](evaluate/README.md)**. The guide covers:
+Evaluation instructions are detailed in **[evaluate/README.md](evaluate/README.md)**. The guide covers:
 
 - semantic and obfuscated item-embedding construction;
 - word- and sentence-level variant quality;
@@ -203,7 +204,7 @@ For questions and collaborations, please contact:
 
 ## 🙏 Acknowledgments
 
-This repository builds on open-source resources and models including [Qwen](https://github.com/QwenLM/Qwen), [Transformers](https://github.com/huggingface/transformers), [TRL](https://github.com/huggingface/trl), [PEFT](https://github.com/huggingface/peft), [Unsloth](https://github.com/unslothai/unsloth), and [Vec2Text](https://github.com/vec2text/vec2text).
+This repository builds on open-source resources and models including [Qwen](https://github.com/QwenLM/Qwen), [Unsloth](https://github.com/unslothai/unsloth), [TALLRec](https://github.com/SAI990323/TALLRec), [LLaRA](https://github.com/ljy0ustc/LLaRA), [RecBole](https://github.com/RUCAIBox/RecBole), [LightGT](https://github.com/iLearn-Lab/SIGIR23-LightGT), [MMRec](https://github.com/enoche/MMRec) and [Vec2Text](https://github.com/vec2text/vec2text).
 
 ## 📚 Citation
 
