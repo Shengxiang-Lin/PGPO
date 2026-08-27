@@ -33,7 +33,7 @@ The repository provides the complete pipeline for data preparation, semantic gra
 ## 📰 News
 
 - **[Coming Soon]** The arXiv preprint and citation information will be released soon. Stay tuned.
-- **[2026.08]** 🎉 PGPO is accepted to EMNLP 2026 as a Main Conference paper.
+- **[2026.08]** PGPO is accepted to EMNLP 2026 MainConference.
 - **[2026.06]** The PGPO implementation and evaluation pipeline are publicly available.
 
 ## 🏗️ Architecture
@@ -102,7 +102,7 @@ mkdir -p base_models
 python download_base_models.py
 ```
 
-The downloader currently fetches Qwen3-4B-Base. Other models used by particular stages, such as BERT-base-uncased, Qwen2.5-14B-Instruct, T5-base, or a recommendation LLM, should be placed under `base_models/` or supplied through the corresponding command-line path argument.
+The downloader currently fetches [Qwen3-4B-Base](https://huggingface.co/unsloth/Qwen3-4B-Base). Other models used by particular stages, such as [BERT-base-uncased](https://huggingface.co/google-bert/bert-base-uncased), [Qwen2.5-14B-Instruct](https://huggingface.co/Qwen/Qwen2.5-14B-Instruct), or [T5-base](https://huggingface.co/google-t5/t5-base), should be placed under `base_models/` or supplied through the corresponding command-line path argument.
 
 ### 3. Prepare Raw Data
 
