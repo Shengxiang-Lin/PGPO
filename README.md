@@ -47,6 +47,7 @@ The repository provides the complete pipeline for data preparation, semantic gra
 ## 📄 Paper
 
 The arXiv preprint is being prepared and will be released soon. **Stay tuned.**
+The paper is accessible on [OpenReview](https://openreview.net/attachment?id=VmDzRXXxdY&name=pdf) now.
 
 ## ✨ Key Features
 
