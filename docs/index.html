@@ -31,12 +31,12 @@
   <meta property="og:title" content="PGPO — EMNLP 2026 Main">
   <meta property="og:description" content="Topology-aware semantic obfuscation for privacy-preserving LLM-enhanced recommendation.">
   <meta property="og:url" content="https://shengxiang-lin.github.io/PGPO/">
-  <meta property="og:image" content="https://raw.githubusercontent.com/Shengxiang-Lin/PGPO/main/docs/assets/framework.webp">
+  <meta property="og:image" content="https://raw.githubusercontent.com/Shengxiang-Lin/PGPO/main/figs/web/framework.webp">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="PGPO — EMNLP 2026 Main">
   <meta name="twitter:description" content="Prototype-guided GRPO for privacy-preserving LLM-enhanced recommendation.">
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/Shengxiang-Lin/PGPO/main/docs/assets/framework.webp">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/Shengxiang-Lin/PGPO/main/figs/web/framework.webp">
 
   <link rel="stylesheet" href="style.css">
 </head>
@@ -99,7 +99,7 @@
       </nav>
 
       <figure class="hero-figure">
-        <img src="assets/framework.webp" alt="Overview of the PGPO framework" width="2400" height="1100" decoding="async">
+        <img src="https://raw.githubusercontent.com/Shengxiang-Lin/PGPO/main/figs/web/framework.webp" alt="Overview of the PGPO framework" width="2400" height="1100" decoding="async">
         <figcaption>
           PGPO identifies high-influence prototype words, learns privacy-preserving obfuscation anchors with GRPO,
           and progressively propagates them through a static vocabulary-level semantic graph.
@@ -107,30 +107,26 @@
       </figure>
     </header>
 
+
     <section id="overview" class="animate-on-scroll">
       <h2>Overview (TL;DR)</h2>
-
       <p class="lead">
-        LLM-enhanced recommender systems can encode item side information into semantic representations,
-        but these representations may leak sensitive textual attributes through inversion attacks.
-        <strong>PGPO</strong> protects textual semantics without discarding the relational geometry needed
-        for recommendation.
+        LLM-enhanced recommenders can benefit from textual side information, but the resulting semantic
+        representations may expose sensitive item attributes to inversion attacks. <strong>PGPO</strong>
+        shifts the goal from preserving literal semantics to preserving <strong>relational fidelity</strong>:
+        change what individual words reveal while retaining how items relate to one another.
       </p>
-
       <p>
-        The central idea is <strong>relational fidelity</strong>: protected representations should move away
-        from their original textual sources while preserving relative semantic relationships among items.
-        PGPO realizes this idea through a prototype-aware semantic graph, GRPO-based anchor exploration,
-        and progressive graph-guided expansion.
+        The method combines a prototype-aware semantic graph, GRPO-based anchor exploration, and
+        graph-guided progressive expansion. The released repository covers the whole pipeline from
+        side-information construction and training to recommendation evaluation and two complementary privacy attacks.
       </p>
-
-      <p>The paper makes three main contributions:</p>
-
-      <ol class="contrib">
-        <li>Introduces <strong>relational fidelity</strong> as a privacy–utility objective for LLM-enhanced recommendation.</li>
-        <li>Proposes a <strong>prototype-guided GRPO</strong> procedure that concentrates optimization on structurally influential vocabulary anchors.</li>
-        <li>Provides an end-to-end evaluation pipeline spanning recommendation utility, embedding inversion, and white-box source re-identification.</li>
-      </ol>
+      <div class="fact-grid">
+        <div class="fact"><strong>2</strong><span>public datasets</span><small>MovieLens-1M · Amazon-Book</small></div>
+        <div class="fact"><strong>6</strong><span>recommenders</span><small>sequential · graph · multimodal · LLM</small></div>
+        <div class="fact"><strong>2</strong><span>privacy threats</span><small>embedding inversion · white-box re-identification</small></div>
+        <div class="fact"><strong>51.8% / 68.2%</strong><span>lower exact-match inversion</span><small>MovieLens / Amazon vs. raw descriptions</small></div>
+      </div>
     </section>
 
     <section id="abstract" class="animate-on-scroll">
@@ -142,11 +138,9 @@
           defenses rely on trusted collection or local token perturbation, often disrupting the inter-item
           semantic topology needed for recommendation. We introduce <strong>relational fidelity</strong> as the
           key objective: semantic shift should be large enough for privacy while relative item relations remain
-          stable for utility. Based on this principle, we propose <strong>PGPO</strong>, which learns topology-aware
-          obfuscation anchors for high-influence prototype words and propagates them through a static semantic graph.
-          PGPO is optimized with GRPO using individual dissimilarity, structural consistency, and semantic constraint
-          rewards. Experiments on MovieLens-1M and Amazon-Book show strong inversion defense with recommendation
-          performance close to the unprotected upper bound.
+          stable for utility. PGPO learns topology-aware obfuscation anchors for high-influence prototype words
+          and propagates them through a static semantic graph. It is optimized with GRPO using individual
+          dissimilarity, structural consistency, and semantic constraint rewards.
         </p>
       </div>
     </section>
@@ -154,95 +148,169 @@
     <section id="motivation" class="animate-on-scroll">
       <h2>Why Relational Fidelity?</h2>
       <p>
-        Protecting an item independently is not enough. Recommendation quality depends on how items relate to one
-        another in semantic space. A useful privacy transformation therefore needs to change exposed semantics
-        <em>without destroying the neighborhood structure that carries recommendation signal</em>.
+        Protecting an item independently is not enough. Recommendation quality depends on relative structure
+        in semantic space. A useful privacy transformation therefore needs to move exposed content away from
+        the original while keeping the neighborhood geometry useful to the recommender.
       </p>
-
       <figure>
-        <img src="assets/motivation.webp" alt="Comparison between local perturbation and PGPO relational-fidelity obfuscation" width="1780" height="720" loading="lazy">
+        <img src="https://raw.githubusercontent.com/Shengxiang-Lin/PGPO/main/figs/web/motivation.webp"
+             alt="Motivation for relational fidelity" loading="lazy">
         <figcaption>
-          PGPO shifts individual semantics for privacy while preserving relative item relations for downstream recommendation.
+          Instead of optimizing isolated token similarity, PGPO preserves the relative semantic structure
+          that downstream recommendation consumes.
         </figcaption>
       </figure>
     </section>
 
     <section id="method" class="animate-on-scroll">
       <h2>How It Works</h2>
-
       <div class="finding">
-        <h3><span class="num">1.</span>Build a prototype-aware semantic graph</h3>
+        <h3><span class="num">1.</span>Prototype-aware graph construction</h3>
         <p>
-          PGPO constructs a static vocabulary-level semantic graph and identifies high-influence prototype words
-          that capture the structural backbone of the vocabulary.
+          PGPO builds a static vocabulary-level semantic graph and selects high-influence prototype words
+          that form a compact structural backbone.
         </p>
       </div>
-
       <div class="finding">
-        <h3><span class="num">2.</span>Learn obfuscation anchors with GRPO</h3>
+        <h3><span class="num">2.</span>GRPO-based prototype exploration</h3>
         <p>
-          For prototype words, PGPO explores candidate variants under three complementary rewards:
+          For prototypes, the policy explores variants under three complementary rewards:
           <strong class="k">individual dissimilarity</strong>, <strong class="k">structural consistency</strong>,
           and <strong class="k">semantic constraint</strong>.
         </p>
       </div>
-
       <div class="finding">
-        <h3><span class="num">3.</span>Expand progressively through the graph</h3>
+        <h3><span class="num">3.</span>Anchor-oriented progressive expansion</h3>
         <p>
-          Once reliable prototype mappings are finalized, non-prototype words are generated while conditioning on
-          nearby finalized mappings. This transfers the learned obfuscation structure from the semantic core to the
-          rest of the vocabulary.
+          Finalized prototype mappings are cached and reused as contextual anchors while the model expands
+          from the semantic core to non-prototype words.
         </p>
       </div>
-
-      <div class="modelset">
-        <b>Core pipeline:</b> semantic graph construction · prototype extraction · GRPO training · context-aware
-        generation cache · progressive expansion · downstream privacy/utility evaluation.
+      <div class="config-line">
+        <b>Default configuration:</b> 5,000 prototype words · cache size 2,000 ·
+        reward weights (λ<sub>dis</sub>, λ<sub>str</sub>, λ<sub>con</sub>) = (1, 2, 1).
       </div>
     </section>
 
-    <section id="results" class="animate-on-scroll">
-      <h2>Key Results</h2>
-
-      <div class="finding">
-        <h3><span class="num">1.</span>Substantially stronger inversion resistance</h3>
-        <p>
-          PGPO reduces exact-match inversion by <strong class="k">51.8%</strong> on MovieLens-1M and
-          <strong class="k">68.2%</strong> on Amazon-Book relative to the unprotected textual representations.
-        </p>
+    <section id="theory" class="animate-on-scroll">
+      <h2>Theory Intuition</h2>
+      <p>
+        The paper also analyzes why path-dependent generation can make source recovery harder.
+        The formal guarantees rely on the assumptions stated in the paper; this section summarizes
+        the intuition rather than replacing the full derivation.
+      </p>
+      <div class="theory-grid">
+        <article>
+          <code>I(X; Z | O)</code>
+          <h3>Trajectory uncertainty</h3>
+          <p>
+            An attacker observes the released variant but not the realized cache/history trajectory,
+            so recovery must marginalize hidden generation paths.
+          </p>
+        </article>
+        <article>
+          <code>H(α)</code>
+          <h3>Semantic-mode ambiguity</h3>
+          <p>
+            Reward shaping encourages multiple plausible semantic modes instead of a single deterministic
+            transformation path.
+          </p>
+        </article>
+        <article>
+          <code>P<sub>succ</sub></code>
+          <h3>Attack-success bound</h3>
+          <p>
+            Under the paper's finite-vocabulary assumptions, higher output and trajectory uncertainty
+            contribute to a lower upper bound on inversion success.
+          </p>
+        </article>
       </div>
+      <p class="note">
+        For final item representations, the paper further uses a data-processing argument: when collaborative
+        signals contain limited residual information about the source text, reducing text-level leakage also
+        reduces representation-level leakage.
+      </p>
+    </section>
 
-      <div class="finding">
-        <h3><span class="num">2.</span>Recommendation utility remains close to the upper bound</h3>
-        <p>
-          Across sequential, graph-based, multimodal, and LLM-based recommenders, PGPO stays close to the
-          performance obtained from original item descriptions while providing substantially stronger privacy.
-        </p>
+    <section id="setup" class="animate-on-scroll">
+      <h2>Evaluation Setup</h2>
+      <div class="dataset-grid">
+        <article>
+          <h3>MovieLens-1M</h3>
+          <dl>
+            <div><dt>Users</dt><dd>6,038</dd></div>
+            <div><dt>Items</dt><dd>3,629</dd></div>
+            <div><dt>Interactions</dt><dd>337,228</dd></div>
+            <div><dt>Sparsity</dt><dd>98.46%</dd></div>
+          </dl>
+        </article>
+        <article>
+          <h3>Amazon-Book</h3>
+          <dl>
+            <div><dt>Users</dt><dd>5,921</dd></div>
+            <div><dt>Items</dt><dd>5,658</dd></div>
+            <div><dt>Interactions</dt><dd>101,305</dd></div>
+            <div><dt>Sparsity</dt><dd>99.66%</dd></div>
+          </dl>
+        </article>
       </div>
+      <div class="threat-grid">
+        <article>
+          <h3>Embedding inversion</h3>
+          <p>
+            Vec2Text is trained on disjoint data and evaluated under aligned original–obfuscated cosine
+            similarity for a fair comparison across perturbation methods.
+          </p>
+        </article>
+        <article>
+          <h3>White-box re-identification</h3>
+          <p>
+            The attacker knows the optimized conversion model, vocabulary, semantic graph, retrieval function,
+            and prompt, but not the cached history or realized generation trajectory. Each test uses the true
+            source plus 50 negatives.
+          </p>
+        </article>
+      </div>
+      <p class="modelset">
+        <b>Recommendation backends:</b> SASRec, LightGCN, FREEDOM, LightGT, TALLRec, and LLaRA.
+        &nbsp; <b>Baselines:</b> InferDPT, Text2Text, SanText+, and TextObfuscator (TOF).
+      </p>
+    </section>
 
-      <div class="finding">
-        <h3><span class="num">3.</span>The protected space retains useful global structure</h3>
-        <p>
-          t-SNE visualizations show that PGPO changes exposed semantics while preserving recognizable relational
-          organization in both MovieLens-1M and Amazon-Book.
-        </p>
+    <section id="quality" class="animate-on-scroll">
+      <h2>Obfuscated Variant Quality</h2>
+      <p>
+        PGPO produces valid variants for nearly all words while achieving the highest local-topology
+        Spearman correlation among the compared methods on both datasets.
+      </p>
+      <div class="metric-strip">
+        <div><span>MovieLens-1M</span><strong>0.9986</strong><small>Valid</small></div>
+        <div><span>MovieLens-1M</span><strong>0.1981</strong><small>Spearman</small></div>
+        <div><span>Amazon-Book</span><strong>0.9983</strong><small>Valid</small></div>
+        <div><span>Amazon-Book</span><strong>0.1808</strong><small>Spearman</small></div>
+      </div>
+      <div class="table-scroll compact" role="region" aria-label="PGPO variant quality" tabindex="0">
+        <table>
+          <thead><tr><th>Dataset</th><th>CosSim</th><th>KL</th><th>NLL</th><th>D-2</th><th>D-1</th><th>LR</th></tr></thead>
+          <tbody>
+            <tr><th>MovieLens-1M</th><td>.6293</td><td>7.9264</td><td>5.7050</td><td>.4257</td><td>.1960</td><td>.8758</td></tr>
+            <tr><th>Amazon-Book</th><td>.6519</td><td>6.9642</td><td>10.0452</td><td>.3378</td><td>.1661</td><td>.9628</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
-    <section id="table" class="animate-on-scroll">
+    <section id="recommendation" class="animate-on-scroll">
       <h2>Recommendation Performance</h2>
       <p>
-        Representative results across multiple recommender families. <strong>Description</strong> denotes the
-        unprotected textual upper bound.
+        Across sequential, graph-based, multimodal, and LLM-based recommenders, PGPO remains close to the
+        unprotected-description upper bound. The table highlights representative metrics from the latest manuscript.
       </p>
-
       <div class="table-scroll" role="region" aria-label="Recommendation results" tabindex="0">
         <table>
           <thead>
             <tr>
-              <th>Dataset</th>
-              <th>Input</th>
+              <th>Dataset</th><th>Input</th>
               <th>SASRec<br><small>HR@10</small></th>
               <th>LightGCN<br><small>HR@10</small></th>
               <th>FREEDOM<br><small>HR@10</small></th>
@@ -252,37 +320,150 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th rowspan="2">MovieLens-1M</th>
-              <td>Description</td><td>.1129</td><td>.0850</td><td>.0840</td><td>.0847</td><td>.6990</td><td>.2454</td>
-            </tr>
-            <tr class="accent-row">
-              <td>PGPO</td><td>.1133</td><td>.0848</td><td>.0842</td><td>.0839</td><td>.6978</td><td>.2451</td>
-            </tr>
-            <tr>
-              <th rowspan="2">Amazon-Book</th>
-              <td>Description</td><td>.1843</td><td>.0926</td><td>.0762</td><td>.0929</td><td>.7983</td><td>.5348</td>
-            </tr>
-            <tr class="accent-row">
-              <td>PGPO</td><td>.1846</td><td>.0920</td><td>.0753</td><td>.0930</td><td>.7979</td><td>.5257</td>
-            </tr>
+            <tr><th rowspan="2">MovieLens-1M</th><td>Description</td><td>.1129</td><td>.0850</td><td>.0840</td><td>.0847</td><td>.6990</td><td>.2454</td></tr>
+            <tr class="accent-row"><td>PGPO</td><td>.1133</td><td>.0848</td><td>.0842</td><td>.0839</td><td>.6978</td><td>.2451</td></tr>
+            <tr><th rowspan="2">Amazon-Book</th><td>Description</td><td>.1843</td><td>.0926</td><td>.0762</td><td>.0929</td><td>.7983</td><td>.5348</td></tr>
+            <tr class="accent-row"><td>PGPO</td><td>.1846</td><td>.0920</td><td>.0753</td><td>.0930</td><td>.7979</td><td>.5257</td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <section id="visualization" class="animate-on-scroll">
+    <section id="privacy" class="animate-on-scroll">
+      <h2>Privacy Evaluation</h2>
+      <div class="privacy-cards">
+        <article>
+          <strong>0.0641 → 0.0309</strong>
+          <span>MovieLens-1M exact-match inversion</span>
+          <small>51.8% reduction</small>
+        </article>
+        <article>
+          <strong>0.0988 → 0.0314</strong>
+          <span>Amazon-Book exact-match inversion</span>
+          <small>68.2% reduction</small>
+        </article>
+      </div>
+      <p>
+        The aligned-CosSim inversion evaluation shows that PGPO provides substantial protection without the
+        recommendation degradation seen in token-level perturbation baselines. A stronger white-box Replay-MLE
+        attacker is used in the ablation analysis below.
+      </p>
+    </section>
+
+    <section id="representation" class="animate-on-scroll">
       <h2>Representation Analysis</h2>
+      <p>
+        The two datasets are shown together for direct comparison rather than using one oversized row per figure.
+      </p>
+      <div class="figure-grid two">
+        <figure>
+          <img src="https://raw.githubusercontent.com/Shengxiang-Lin/PGPO/main/figs/web/tsne-movielens.webp"
+               alt="MovieLens-1M t-SNE visualization" loading="lazy">
+          <figcaption><strong>MovieLens-1M.</strong> Original and obfuscated item representations.</figcaption>
+        </figure>
+        <figure>
+          <img src="https://raw.githubusercontent.com/Shengxiang-Lin/PGPO/main/figs/web/tsne-amazon.webp"
+               alt="Amazon-Book t-SNE visualization" loading="lazy">
+          <figcaption><strong>Amazon-Book.</strong> Original and obfuscated item representations.</figcaption>
+        </figure>
+      </div>
+    </section>
 
-      <figure>
-        <img src="assets/tsne-movielens.webp" alt="t-SNE visualization of original and obfuscated representations on MovieLens-1M" width="1200" height="860" loading="lazy">
-        <figcaption><strong>MovieLens-1M.</strong> PGPO shifts exposed semantics while retaining a coherent relational layout.</figcaption>
-      </figure>
+    <section id="ablation" class="animate-on-scroll">
+      <h2>Ablation: What Each Component Contributes</h2>
+      <div class="ablation-list">
+        <div><b>w/o GRPO</b><span>weaker recommendation and higher re-identification risk</span></div>
+        <div><b>w/o context</b><span>local semantic topology deteriorates when words are generated independently</span></div>
+        <div><b>w/o dissimilarity</b><span>variants stay too close to originals and privacy collapses most severely</span></div>
+        <div><b>w/o structural</b><span>unlinkability improves, but relational fidelity and recommendation utility are damaged</span></div>
+        <div><b>w/o constraint</b><span>generation can degenerate toward shortcut transformations such as translation</span></div>
+      </div>
+      <div class="table-scroll compact" role="region" aria-label="White-box privacy ablation" tabindex="0">
+        <table>
+          <thead><tr><th>Method</th><th>ReID@1 ↓</th><th>MRR ↓</th><th>H<sub>att</sub> ↑</th><th>I<sub>att</sub> ↓</th></tr></thead>
+          <tbody>
+            <tr><td>w/o GRPO</td><td>.5946</td><td>.6796</td><td>1.129</td><td>4.515</td></tr>
+            <tr><td>w/o context</td><td>.4406</td><td>.5627</td><td>1.506</td><td>4.138</td></tr>
+            <tr><td>w/o dissimilarity</td><td>.8918</td><td>.9210</td><td>.268</td><td>5.376</td></tr>
+            <tr><td>w/o structural</td><td>.1959</td><td>.3102</td><td>1.790</td><td>3.854</td></tr>
+            <tr><td>w/o constraint</td><td>.3435</td><td>.4441</td><td>1.455</td><td>4.189</td></tr>
+            <tr class="accent-row"><td><b>PGPO</b></td><td>.2642</td><td>.3795</td><td>1.647</td><td>3.997</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
 
-      <figure>
-        <img src="assets/tsne-amazon.webp" alt="t-SNE visualization of original and obfuscated representations on Amazon-Book" width="1200" height="860" loading="lazy">
-        <figcaption><strong>Amazon-Book.</strong> The protected representation space retains useful large-scale structure.</figcaption>
-      </figure>
+    <section id="appendix-insights" class="animate-on-scroll">
+      <h2>Appendix Insights: Parameter Sensitivity</h2>
+      <p>
+        Several analyses that are easy to miss in the paper's main body are useful for understanding how
+        PGPO behaves in practice.
+      </p>
+
+      <div class="sensitivity-block">
+        <div>
+          <h3>Cache size</h3>
+          <p>
+            Removing the cache nearly destroys local structural preservation (Spearman 0.0070). A moderate
+            cache restores relational anchors; very large caches bring diminishing returns and increasingly
+            favor low-similarity variants.
+          </p>
+        </div>
+        <figure class="web-chart">
+          <img src="https://raw.githubusercontent.com/Shengxiang-Lin/PGPO/main/figs/cache-sensitivity.svg"
+               alt="Cache-size sensitivity" loading="lazy">
+          <figcaption>Cache history acts as a contextual structural anchor.</figcaption>
+        </figure>
+      </div>
+
+      <div class="sensitivity-block">
+        <div>
+          <h3>Prototype count</h3>
+          <p>
+            A small high-influence set is already enough to establish effective anchors. Expanding too far makes
+            structural learning harder: Spearman falls from about 0.235 at 1.25k–2.5k prototypes to 0.131 at 10k.
+          </p>
+        </div>
+        <figure class="web-chart">
+          <img src="https://raw.githubusercontent.com/Shengxiang-Lin/PGPO/main/figs/prototype-sensitivity.svg"
+               alt="Prototype-count sensitivity" loading="lazy">
+          <figcaption>Prototype selection favors structural influence over exhaustive coverage.</figcaption>
+        </figure>
+      </div>
+
+      <div class="sensitivity-block">
+        <div>
+          <h3>Reward weights</h3>
+          <p>
+            The three rewards control different axes: dissimilarity strengthens semantic displacement,
+            structural consistency raises neighborhood preservation, and the semantic constraint keeps outputs
+            on a valid semantic manifold. Over-weighting the constraint makes variants too close to the source.
+          </p>
+        </div>
+        <figure class="web-chart">
+          <img src="https://raw.githubusercontent.com/Shengxiang-Lin/PGPO/main/figs/reward-sensitivity.svg"
+               alt="Reward-weight sensitivity" loading="lazy">
+          <figcaption>Reward weights expose the privacy–structure–validity trade-off directly.</figcaption>
+        </figure>
+      </div>
+
+      <div class="callout">
+        <strong>Further observation.</strong>
+        Once the local semantic skeleton is sufficiently preserved, improving fine-grained literal semantic
+        fidelity brings limited additional recommendation gains. This is the empirical motivation behind
+        PGPO's relational-fidelity principle.
+      </div>
+    </section>
+
+    <section id="scope" class="animate-on-scroll">
+      <h2>Scope &amp; Limitations</h2>
+      <p>
+        The current implementation applies a unified obfuscation strategy rather than assigning stronger
+        protection to especially sensitive or rare words. It also introduces extra LLM generation cost,
+        and the current study focuses on textual side information. Sensitivity-aware privacy budgets,
+        lightweight policy distillation, retrieval-based reuse, and multimodal relational fidelity are
+        natural extensions.
+      </p>
     </section>
 
     <section id="resources" class="animate-on-scroll">
@@ -330,8 +511,7 @@ pip install -r requirements.txt</code></pre>
     <section id="acknowledgments" class="animate-on-scroll">
       <h2>Acknowledgments</h2>
       <p>
-        This work was supported by the National Natural Science Foundation of China
-        (Nos. 72192823, 62177038, and 62522217).
+        This work was supported by the National Natural Science Foundation of China under Grant Nos. 72192823, 62177038, 62522217 and 624B2131.
       </p>
     </section>
 
