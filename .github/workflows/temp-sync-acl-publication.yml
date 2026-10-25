@@ -1,0 +1,104 @@
+name: Temp Sync ACL Publication
+
+on:
+  push:
+    branches:
+      - docs/remove-arxiv-use-acl
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: docs/remove-arxiv-use-acl
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Replace arXiv placeholders with official ACL publication links
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def must_replace(text, old, new, label):
+              if old not in text:
+                  raise SystemExit(f'missing expected text: {label}')
+              return text.replace(old, new)
+
+          readme_path = Path('README.md')
+          readme = readme_path.read_text(encoding='utf-8')
+          readme = must_replace(
+              readme,
+              '  <img src="https://img.shields.io/badge/arXiv-Coming%20Soon-b31b1b.svg" alt="arXiv: Coming Soon">\n',
+              '',
+              'README arXiv badge',
+          )
+          readme = must_replace(
+              readme,
+              '\nThe arXiv preprint is still pending release; the ACL Anthology version should be treated as the current official publication.\n',
+              '\n',
+              'README arXiv pending sentence',
+          )
+          readme_path.write_text(readme, encoding='utf-8')
+
+          page_path = Path('docs/index.html')
+          page = page_path.read_text(encoding='utf-8')
+          page = must_replace(
+              page,
+              '<meta name="description" content="PGPO, accepted to EMNLP 2026 Main Conference, learns topology-aware semantic obfuscation for privacy-preserving LLM-enhanced recommendation.">',
+              '<meta name="description" content="PGPO, published at EMNLP 2026 Main Conference, learns topology-aware semantic obfuscation for privacy-preserving LLM-enhanced recommendation.">',
+              'publication description',
+          )
+          page = must_replace(
+              page,
+              '  <meta name="citation_conference_title" content="Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing">',
+              '  <meta name="citation_conference_title" content="Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing">\n  <meta name="citation_public_url" content="https://aclanthology.org/2026.emnlp-main.480/">\n  <meta name="citation_pdf_url" content="https://aclanthology.org/2026.emnlp-main.480.pdf">',
+              'citation metadata',
+          )
+          page = must_replace(
+              page,
+              '''        <span class="btn disabled" title="The arXiv link will be added once the preprint is public">\n          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.8 2.8h7l3.4 3.4V21.2H6.8zM13.8 2.8v4h4M9 12h6M9 15h6M9 18h4.5"/></svg>\n          Paper · Coming Soon\n        </span>''',
+              '''        <a class="btn" href="https://aclanthology.org/2026.emnlp-main.480/" target="_blank" rel="noopener">\n          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.8 2.8h7l3.4 3.4V21.2H6.8zM13.8 2.8v4h4M9 12h6M9 15h6M9 18h4.5"/></svg>\n          Paper · ACL Anthology\n        </a>''',
+              'primary paper button',
+          )
+          page = must_replace(
+              page,
+              '        <li>arXiv preprint — coming soon.</li>',
+              '        <li><a href="https://aclanthology.org/2026.emnlp-main.480/">ACL Anthology paper</a> — official EMNLP 2026 publication and citation metadata.</li>',
+              'resources arXiv item',
+          )
+          page = must_replace(
+              page,
+              '''      <nav class="btns" aria-label="Project links repeated">\n        <a class="btn" href="https://github.com/Shengxiang-Lin/PGPO">Code</a>''',
+              '''      <nav class="btns" aria-label="Project links repeated">\n        <a class="btn" href="https://aclanthology.org/2026.emnlp-main.480/" target="_blank" rel="noopener">Paper</a>\n        <a class="btn" href="https://github.com/Shengxiang-Lin/PGPO">Code</a>''',
+              'repeated paper button',
+          )
+          page = must_replace(
+              page,
+              '        <span>EMNLP 2026 citation · arXiv metadata forthcoming</span>',
+              '        <span>Official EMNLP 2026 citation · ACL Anthology</span>',
+              'BibTeX heading',
+          )
+          page = must_replace(
+              page,
+              '''  booktitle={Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing},\n  year={2026},\n  note={To appear}\n}''',
+              '''  booktitle={Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing},\n  month={oct},\n  year={2026},\n  address={Budapest, Hungary},\n  publisher={Association for Computational Linguistics},\n  url={https://aclanthology.org/2026.emnlp-main.480/}\n}''',
+              'BibTeX publication status',
+          )
+          page_path.write_text(page, encoding='utf-8')
+          PY
+
+      - name: Remove temporary workflow and commit
+        run: |
+          git rm .github/workflows/temp-sync-acl-publication.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md docs/index.html
+          git commit -m "Use ACL Anthology as the official PGPO paper source"
+          git push origin HEAD:docs/remove-arxiv-use-acl
