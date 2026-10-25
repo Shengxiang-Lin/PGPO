@@ -23,7 +23,6 @@
   <img src="https://img.shields.io/badge/Python-3.10+-green.svg" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/Framework-GRPO-orange.svg" alt="Framework: GRPO">
   <a href="https://aclanthology.org/2026.emnlp-main.480/"><img src="https://img.shields.io/badge/Paper-ACL%20Anthology-8B0000" alt="Paper: ACL Anthology"></a>
-  <img src="https://img.shields.io/badge/arXiv-Coming%20Soon-b31b1b.svg" alt="arXiv: Coming Soon">
 </p>
 
 PGPO is a privacy-preserving framework for LLM-enhanced recommendation. It constructs a vocabulary-level semantic graph, identifies high-influence prototype words, learns privacy-preserving prototype variants with Group Relative Policy Optimization, and progressively propagates the learned obfuscation structure to the remaining vocabulary.
@@ -53,7 +52,6 @@ The official EMNLP 2026 version is available in the ACL Anthology:
 - **OpenReview:** [hsbnfmIbo4](https://openreview.net/forum?id=hsbnfmIbo4)
 - **EMNLP 2026 Proceedings:** [ACL Anthology event page](https://aclanthology.org/events/emnlp-2026/)
 
-The arXiv preprint is still pending release; the ACL Anthology version should be treated as the current official publication.
 
 ## ✨ Key Features
 
