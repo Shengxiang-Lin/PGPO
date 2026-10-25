@@ -22,7 +22,7 @@
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
   <img src="https://img.shields.io/badge/Python-3.10+-green.svg" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/Framework-GRPO-orange.svg" alt="Framework: GRPO">
-  <img src="https://img.shields.io/badge/Paper-EMNLP-8B0000" alt="Paper"></a>
+  <a href="https://aclanthology.org/2026.emnlp-main.480/"><img src="https://img.shields.io/badge/Paper-ACL%20Anthology-8B0000" alt="Paper: ACL Anthology"></a>
   <img src="https://img.shields.io/badge/arXiv-Coming%20Soon-b31b1b.svg" alt="arXiv: Coming Soon">
 </p>
 
@@ -32,8 +32,8 @@ The repository provides the complete pipeline for data preparation, semantic gra
 
 ## 📰 News
 
-- **[Coming Soon]** The arXiv preprint and citation information will be released soon. Stay tuned.
-- **[2026.08]** PGPO is accepted to EMNLP 2026 MainConference.
+- **[2026.10]** PGPO is now officially available in the [ACL Anthology](https://aclanthology.org/2026.emnlp-main.480/) as an EMNLP 2026 Main Conference paper.
+- **[2026.08]** PGPO is accepted to EMNLP 2026 Main Conference.
 - **[2026.06]** The PGPO implementation and evaluation pipeline are publicly available.
 
 ## 🏗️ Architecture
@@ -46,8 +46,14 @@ The repository provides the complete pipeline for data preparation, semantic gra
 
 ## 📄 Paper
 
-The arXiv preprint is being prepared and will be released soon. **Stay tuned.**   
-The paper is accessible on [OpenReview](https://openreview.net/forum?id=hsbnfmIbo4#discussion) now.
+The official EMNLP 2026 version is available in the ACL Anthology:
+
+- **ACL Anthology:** [2026.emnlp-main.480](https://aclanthology.org/2026.emnlp-main.480/)
+- **PDF:** [2026.emnlp-main.480.pdf](https://aclanthology.org/2026.emnlp-main.480.pdf)
+- **OpenReview:** [hsbnfmIbo4](https://openreview.net/forum?id=hsbnfmIbo4)
+- **EMNLP 2026 Proceedings:** [ACL Anthology event page](https://aclanthology.org/events/emnlp-2026/)
+
+The arXiv preprint is still pending release; the ACL Anthology version should be treated as the current official publication.
 
 ## ✨ Key Features
 
@@ -213,4 +219,17 @@ This repository builds on open-source resources and models including [Qwen](http
 
 ## 📚 Citation
 
-The BibTeX entry will be provided when the arXiv preprint is released. **Stay tuned.**
+Official citation metadata and BibTeX are available from the [ACL Anthology entry](https://aclanthology.org/2026.emnlp-main.480/) and the [ACL BibTeX export](https://aclanthology.org/2026.emnlp-main.480.bib).
+
+```bibtex
+@inproceedings{lin2026pgpo,
+  title     = {PGPO: Prototype-Guided Progressive Obfuscation for Privacy-Preserving LLM-Enhanced Recommendation},
+  author    = {Lin, Shengxiang and Su, Jiajie and Zhou, Pengyang and Chen, Xiang and Zheng, Xiaolin and Tian, Feng and Chen, Chaochao},
+  booktitle = {Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing},
+  month     = oct,
+  year      = {2026},
+  address   = {Budapest, Hungary},
+  publisher = {Association for Computational Linguistics},
+  url       = {https://aclanthology.org/2026.emnlp-main.480/}
+}
+```
