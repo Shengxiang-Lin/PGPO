@@ -220,14 +220,26 @@ This repository builds on open-source resources and models including [Qwen](http
 Official citation metadata and BibTeX are available from the [ACL Anthology entry](https://aclanthology.org/2026.emnlp-main.480/) and the [ACL BibTeX export](https://aclanthology.org/2026.emnlp-main.480.bib).
 
 ```bibtex
-@inproceedings{lin2026pgpo,
-  title     = {PGPO: Prototype-Guided Progressive Obfuscation for Privacy-Preserving LLM-Enhanced Recommendation},
-  author    = {Lin, Shengxiang and Su, Jiajie and Zhou, Pengyang and Chen, Xiang and Zheng, Xiaolin and Tian, Feng and Chen, Chaochao},
-  booktitle = {Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing},
-  month     = oct,
-  year      = {2026},
-  address   = {Budapest, Hungary},
-  publisher = {Association for Computational Linguistics},
-  url       = {https://aclanthology.org/2026.emnlp-main.480/}
+@inproceedings{lin-etal-2026-pgpo,
+    title = "{PGPO}: Prototype-Guided Progressive Obfuscation for Privacy-Preserving {LLM}-Enhanced Recommendation",
+    author = "Lin, Shengxiang  and
+      Su, Jiajie  and
+      Zhou, Pengyang  and
+      Chen, Xiang  and
+      Zheng, Xiaolin  and
+      Tian, Feng  and
+      Chen, Chaochao",
+    editor = "Lee, Hung-Yi  and
+      Dev, Sunipa  and
+      Li, Jessy  and
+      Elliott, Desmond",
+    booktitle = "Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing",
+    month = oct,
+    year = "2026",
+    address = "Budapest, Hungary",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.emnlp-main.480/",
+    pages = "11027--11046",
+    ISBN = "979-8-89176-459-0"
 }
 ```
