@@ -22,6 +22,7 @@
   <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
   <img src="https://img.shields.io/badge/Python-3.10+-green.svg" alt="Python 3.10+">
   <img src="https://img.shields.io/badge/Framework-GRPO-orange.svg" alt="Framework: GRPO">
+  <img src="https://img.shields.io/badge/Training-TRL%2BUnsloth-orange.svg" alt="Training: TRL+Unsloth">
   <a href="https://aclanthology.org/2026.emnlp-main.480/"><img src="https://img.shields.io/badge/Paper-ACL%20Anthology-8B0000" alt="Paper: ACL Anthology"></a>
 </p>
 
